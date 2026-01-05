@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCM Metabolic Assessment - 5 Element Theory</title>
+    <style>
+@media print {
+    /* General Settings */
+    body {
+        margin: 0.1in; /* Reduce overall margins */
+        padding: 0;
+        font-size: 10px; /* Compact font size */
+        line-height: 1.1; /* Reduce line height for dense content */
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 5px; /* Reduce spacing */
+        font-size: 12px; /* Compact header font */
+        border: none;
+    }
+
+    h1, h3 {
+        font-size: 14px; /* Compact headings for better fit */
+    }
+
+    /* Content Styling */
+    .patient-info, .scoring-guide, .element-section, .imbalance-section {
+        margin: 0;
+        padding: 5px; /* Reduce padding */
+        border: none;
+        background: none; /* Remove background styling */
+    }
+
+    .element-section {
+        page-break-inside: avoid; /* Prevent page breaks within sections */
+        page-break-after: auto; /* Allow natural flow */
+        margin-bottom: 10px; /* Reduce spacing between sections */
+    }
+
+    /* Table Styling */
+    table {
+        width: 100%; /* Ensure tables fit tightly within width */
+        border-collapse: collapse; /* Compact table layout */
+    }
+
+    tr, td {
+        padding: 2px; /* Very compact padding for dense rows */
+        font-size: 10px; /* Table font size adjusted */
+    }
+
+    td.symptom-name {
+        width: 60%; /* Optimize width for names */
+    }
+
+    td.symptom-score {
+        width: 40%; /* Optimize width for scores */
+        text-align: center;
+    }
+
+    /* Page Breaks Between Major Sections */
+    .page-break {
+        page-break-after: always; /* Ensure manual breaks between sections */
+    }
+
+    /* Hide Non-Print Elements */
+    .print-button, .footer {
+        display: none; /* Exclude non-printable items */
+    }
+
+    /* Force Compact Heights */
+    .element-section {
+        height: auto; /* Ensure sections are flexible */
+        overflow: hidden; /* Prevent overflow */
+    }
+}
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.4;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #2c5f2d;
+            padding-bottom: 15px;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #2c5f2d;
+            font-size: 24px;
+        }
+
+        .header p {
+            margin: 5px 0;
+            color: #555;
+            font-size: 12px;
+        }
+        
+        .print-button {
+            margin: 20px 0;
+            padding: 10px 15px;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .print-button:hover {
+            background-color: #43a047;
+        }
+.button-group button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: 1px solid #ddd;
+    background-color: #f7f7f7;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.button-group button.active {
+    background-color: #4caf50;
+    color: white;
+    border-color: #4caf50;
+}
+        
+        .patient-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .patient-info label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 3px;
+            font-size: 11px;
+            color: #333;
+        }
+        
+        .patient-info input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 11px;
+        }
+        
+        .scoring-guide {
+            background: #e8f4e8;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #2c5f2d;
+            font-size: 10px;
+        }
+        
+        .scoring-guide strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5f2d;
+        }
+        
+        .element-section {
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .element-header {
+            padding: 10px 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .wood-header { background: #4a7c59; }
+        .fire-header { background: #d64545; }
+        .earth-header { background: #c49b44; }
+        .metal-header { background: #9a9a9a; }
+        .water-header { background: #3b5998; }
+        
+        .element-description {
+            padding: 10px 15px;
+            background: #f7f7f7;
+            font-size: 10px;
+            font-style: italic;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .symptoms-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .symptoms-table tr {
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .symptoms-table tr:last-child {
+            border-bottom: none;
+        }
+        
+        .symptoms-table td {
+            padding: 8px 15px;
+            font-size: 11px;
+        }
+        
+        .symptom-name {
+            width: 75%;
+        }
+        
+        .symptom-score {
+            width: 25%;
+            text-align: center;
+        }
+        
+        .symptom-score input {
+            width: 40px;
+            padding: 4px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 11px;
+        }
+        
+        .total-row {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+        
+        .total-row td {
+            padding: 10px 15px;
+        }
+        
+        .imbalance-section {
+            margin-top: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .imbalance-section h3 {
+            margin-top: 0;
+            color: #2c5f2d;
+            font-size: 14px;
+            border-bottom: 2px solid #2c5f2d;
+            padding-bottom: 5px;
+        }
+        
+        .imbalance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .imbalance-item {
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+        }
+        
+        .imbalance-item input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
+        .notes-section {
+            margin-top: 15px;
+        }
+        
+        .notes-section label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 11px;
+        }
+        
+        .notes-section textarea {
+            width: 100%;
+            height: 60px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 11px;
+            font-family: Arial, sans-serif;
+            resize: vertical;
+        }
+        
+        .page-break {
+            margin: 30px 0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px solid #2c5f2d;
+            font-size: 9px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<!-- PAGE 1 HEADER -->
+<div class="header" style="text-align: center; margin-bottom: 10px;">
+    <h1 style="font-size: 14px; color: #2c5f2d; margin: 0;">Traditional Chinese Medicine Metabolic Assessment</h1>
+    <p style="font-size: 10px; color: #555; margin: 5px 0;">Comprehensive Symptom Evaluation Form</p>
+</div>
+
+<!-- PATIENT INFO SECTION -->
+<div class="patient-info" style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 10px; font-size: 10px;">
+    <div style="font-size: 10px;">
+        <label style="display: block; font-weight: bold; margin-bottom: 3px;">Patient Name:</label>
+        <input type="text" name="patient_name" style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 3px;">
+    </div>
+    <div style="font-size: 10px;">
+        <label style="display: block; font-weight: bold; margin-bottom: 3px;">Date:</label>
+        <input type="date" name="date" style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 3px;">
+    </div>
+    <div style="font-size: 10px;">
+        <label style="display: block; font-weight: bold; margin-bottom: 3px;">Patient Email:</label>
+        <input type="text" name="patient_email" style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 3px;">
+    </div>
+    <div style="font-size: 10px;">
+        <label style="display: block; font-weight: bold; margin-bottom: 3px;">Practitioner:</label>
+        <input type="text" name="practitioner" style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 3px;">
+    </div>
+</div>
+
+<!-- SCORING GUIDE -->
+<div class="scoring-guide" style="background: #e8f4e8; padding: 5px; margin-bottom: 10px; border-left: 4px solid #2c5f2d; font-size: 10px;">
+    <strong style="display: block; margin-bottom: 5px; color: #2c5f2d;">Scoring Instructions:</strong>
+    <p style="margin: 0;">
+        Rate each symptom on a scale of 0-3 based on frequency and severity:<br>
+        <strong>0</strong> = Never or almost never experience<br>
+        <strong>1</strong> = Occasionally experience, mild intensity (1-2 times per month)<br>
+        <strong>2</strong> = Frequently experience, moderate intensity (1-2 times per week)<br>
+        <strong>3</strong> = Constantly or almost constantly experience, severe intensity (daily or almost daily)
+    </p>
+</div>
+    
+ <!-- SECTION 1 -->
+<div class="element-section" style="margin-bottom: 10px; padding: 5px;">
+    <div class="element-header wood-header" style="padding: 5px; font-size: 12px; background-color: #4a7c59; color: white;">
+        SECTION 1: Wood Element
+    </div>
+    <table class="symptoms-table" style="width: 100%; border-collapse: collapse; font-size: 10px;">
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Irritability, anger, or frustration</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="wood_1">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="wood_1" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Headaches (especially temporal or vertex)</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="wood_2">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="wood_2" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Eye problems (dry eyes, blurry vision, floaters)</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="wood_3">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="wood_3" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Muscle tension, stiffness, or spasms</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="wood_4">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="wood_4" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Digestive issues (bloating, gas, alternating constipation/diarrhea)</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="wood_5">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="wood_5" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Menstrual irregularities or PMS</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="wood_6">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="wood_6" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Hypochondriac or rib-side pain</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="wood_7">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="wood_7" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Difficulty making decisions or planning</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="wood_8">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="wood_8" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Brittle or ridged nails</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="wood_9">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="wood_9" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Sighing frequently</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="wood_10">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="wood_10" value="0">
+            </td>
+        </tr>
+        <tr class="total-row" style="background-color: #f0f0f0; font-weight: bold;">
+            <td style="padding: 6px;">SECTION 1 TOTAL:</td>
+            <td class="symptom-score" style="padding: 6px; text-align: center;">
+                <input type="number" name="wood_total" min="0" max="30" readonly style="background: #f0f0f0;">
+            </td>
+        </tr>
+    </table>
+</div>
+<!-- SECTION 2 -->
+<div class="element-section" style="margin-bottom: 10px; padding: 5px;">
+    <div class="element-header fire-header" style="padding: 5px; font-size: 12px; background-color: #d64545; color: white;">
+        SECTION 2: Fire Element
+    </div>
+    <table class="symptoms-table" style="width: 100%; border-collapse: collapse; font-size: 10px;">
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Anxiety, panic attacks, or restlessness</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="fire_1">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="fire_1" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Insomnia or poor sleep quality</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="fire_2">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="fire_2" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Heart palpitations or irregular heartbeat</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="fire_3">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="fire_3" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Chest tightness or discomfort</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="fire_4">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="fire_4" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Excessive sweating (especially at night)</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="fire_5">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="fire_5" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Speech difficulties (stuttering, incoherence)</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="fire_6">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="fire_6" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Cold sores or mouth ulcers</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="fire_7">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="fire_7" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Red facial complexion or red tongue tip</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="fire_8">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="fire_8" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Poor memory or concentration</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="fire_9">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="fire_9" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 4px; width: 60%;">Difficulty discerning or absorbing information</td>
+            <td class="symptom-score" style="padding: 4px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="fire_10">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="fire_10" value="0">
+            </td>
+        </tr>
+        <tr class="total-row" style="background-color: #f0f0f0; font-weight: bold;">
+            <td style="padding: 6px;">SECTION 2 TOTAL:</td>
+            <td class="symptom-score" style="padding: 6px; text-align: center;">
+                <input type="number" name="fire_total" min="0" max="30" readonly style="background: #f0f0f0;">
+            </td>
+        </tr>
+    </table>
+</div>
+    
+<!-- SECTION 3 -->
+<div class="element-section" style="margin-bottom: 10px; padding: 5px;">
+    <div class="element-header earth-header" style="padding: 5px; font-size: 12px; background-color: #c49b44; color: white;">
+        SECTION 3: Earth Element
+    </div>
+    <table class="symptoms-table" style="width: 100%; border-collapse: collapse; font-size: 10px;">
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Chronic fatigue or lethargy</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="earth_1">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="earth_1" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Poor appetite or excessive hunger</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="earth_2">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="earth_2" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Bloating or abdominal distension after eating</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="earth_3">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="earth_3" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Loose stools or undigested food in stool</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="earth_4">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="earth_4" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Weight gain or difficulty losing weight</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="earth_5">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="earth_5" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Excessive worry or overthinking</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="earth_6">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="earth_6" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Weak limbs or muscle atrophy</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="earth_7">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="earth_7" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Easy bruising or bleeding</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="earth_8">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="earth_8" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Cravings for sweets</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="earth_9">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="earth_9" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Pale or yellowish complexion</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="earth_10">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="earth_10" value="0">
+            </td>
+        </tr>
+        <tr class="total-row" style="background-color: #f0f0f0; font-weight: bold;">
+            <td style="padding: 6px;">SECTION 3 TOTAL:</td>
+            <td class="symptom-score" style="padding: 6px; text-align: center;">
+                <input type="number" name="earth_total" min="0" max="30" readonly style="background: #f0f0f0;">
+            </td>
+        </tr>
+    </table>
+</div>
+    
+    <div class="page-break"></div>
+    
+    <!-- PAGE 2 -->
+    <div class="header" style="margin-top: 0;">
+        <h1>TCM Metabolic Assessment - Page 2</h1>
+        <p>Comprehensive Symptom Evaluation Form - Continued</p>
+    </div>
+    
+<!-- SECTION 4 -->
+<div class="element-section" style="margin-bottom: 10px; padding: 5px;">
+    <div class="element-header metal-header" style="padding: 5px; font-size: 12px; background-color: #9a9a9a; color: white;">
+        SECTION 4: Metal Element
+    </div>
+    <table class="symptoms-table" style="width: 100%; border-collapse: collapse; font-size: 10px;">
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Shortness of breath or shallow breathing</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="metal_1">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="metal_1" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Frequent colds, flu, or respiratory infections</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="metal_2">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="metal_2" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Chronic cough or asthma</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="metal_3">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="metal_3" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Skin problems (dryness, eczema, acne)</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="metal_4">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="metal_4" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Constipation or difficulty with bowel movements</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="metal_5">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="metal_5" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Grief, sadness, or inability to let go</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="metal_6">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="metal_6" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Weak immune system</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="metal_7">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="metal_7" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Nasal congestion or sinusitis</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="metal_8">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="metal_8" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Spontaneous sweating during the day</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="metal_9">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="metal_9" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Weak voice or reluctance to speak</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="metal_10">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="metal_10" value="0">
+            </td>
+        </tr>
+        <tr class="total-row" style="background-color: #f0f0f0; font-weight: bold;">
+            <td style="padding: 6px;">SECTION 4 TOTAL:</td>
+            <td class="symptom-score" style="padding: 6px; text-align: center;">
+                <input type="number" name="metal_total" min="0" max="30" readonly style="background: #f0f0f0;">
+            </td>
+        </tr>
+    </table>
+</div>
+    
+<!-- SECTION 5 -->
+<div class="element-section" style="margin-bottom: 10px; padding: 5px;">
+    <div class="element-header water-header" style="padding: 5px; font-size: 12px; background-color: #3b5998; color: white;">
+        SECTION 5: Water Element
+    </div>
+    <table class="symptoms-table" style="width: 100%; border-collapse: collapse; font-size: 10px;">
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Lower back pain or weakness</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="water_1">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="water_1" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Frequent urination or urinary incontinence</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="water_2">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="water_2" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Fear, anxiety, or phobias</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="water_3">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="water_3" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Tinnitus or hearing problems</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="water_4">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="water_4" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Premature graying or hair loss</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="water_5">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="water_5" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Bone or teeth problems</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="water_6">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="water_6" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Cold extremities or feeling cold easily</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="water_7">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="water_7" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Low libido or sexual dysfunction</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="water_8">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="water_8" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Edema or water retention</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="water_9">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="water_9" value="0">
+            </td>
+        </tr>
+        <tr>
+            <td class="symptom-name" style="padding: 3px; width: 60%;">Lack of willpower or motivation</td>
+            <td class="symptom-score" style="padding: 3px; width: 40%; text-align: center;">
+                <div class="button-group" data-symptom="water_10">
+                    <button type="button" data-value="0" class="active">0</button>
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3">3</button>
+                </div>
+                <input type="hidden" name="water_10" value="0">
+            </td>
+        </tr>
+        <tr class="total-row" style="background-color: #f0f0f0; font-weight: bold;">
+            <td style="padding: 6px;">SECTION 5 TOTAL:</td>
+            <td class="symptom-score" style="padding: 6px; text-align: center;">
+                <input type="number" name="water_total" min="0" max="30" readonly style="background: #f0f0f0;">
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- IMBALANCE AND DOMINANCE SECTION -->
+<div class="imbalance-section" style="margin-bottom: 10px; padding: 5px;">
+    <h3 style="font-size: 12px; margin-bottom: 5px; color: #2c5f2d;">Section Imbalance Patterns</h3>
+    <p style="font-size: 10px; margin-bottom: 10px; font-style: italic;">
+        Check the patterns that apply based on the assessment. Scores and interactions between elements reflect the Five Element Theory.
+    </p>
+
+    <div class="imbalance-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 10px;">
+        <div class="imbalance-item" style="display: flex; align-items: center; gap: 5px;">
+            <span>Section 1 Total (Wood):</span>
+            <span id="imbalance-wood-total" style="font-weight: bold;">0</span>
+        </div>
+        <div class="imbalance-item" style="display: flex; align-items: center; gap: 5px;">
+            <span>Section 2 Total (Fire):</span>
+            <span id="imbalance-fire-total" style="font-weight: bold;">0</span>
+        </div>
+        <div class="imbalance-item" style="display: flex; align-items: center; gap: 5px;">
+            <span>Section 3 Total (Earth):</span>
+            <span id="imbalance-earth-total" style="font-weight: bold;">0</span>
+        </div>
+        <div class="imbalance-item" style="display: flex; align-items: center; gap: 5px;">
+            <span>Section 4 Total (Metal):</span>
+            <span id="imbalance-metal-total" style="font-weight: bold;">0</span>
+        </div>
+        <div class="imbalance-item" style="display: flex; align-items: center; gap: 5px;">
+            <span>Section 5 Total (Water):</span>
+            <span id="imbalance-water-total" style="font-weight: bold;">0</span>
+        </div>
+    </div>
+
+    <div class="results-summary" style="margin-top: 10px;">
+        <h3 style="font-size: 12px; margin-bottom: 5px; color: #2c5f2d;">Five Element Theory Interactions</h3>
+        <ul id="five-element-summary" style="font-size: 10px; line-height: 1.4; padding-left: 15px;">
+            <!-- Interaction results will populate here -->
+        </ul>
+    </div>
+
+    <div class="notes-section" style="margin-top: 10px; font-size: 10px;">
+        <label style="font-weight: bold; margin-bottom: 3px;">Clinical Notes & Treatment Recommendations:</label>
+        <textarea name="clinical_notes" placeholder="Discuss interactions and treatment strategies..." style="width: 100%; height: 50px; padding: 5px; border: 1px solid #ccc; border-radius: 3px; resize: vertical;"></textarea>
+    </div>
+</div>
+
+<!-- Print Button -->
+<button class="print-button" onclick="printDocument()" style="margin-top: 10px; padding: 8px 12px; background-color: #4caf50; border: none; border-radius: 4px; font-size: 12px; color: white; cursor: pointer;">
+    Print
+</button>
+<script>
+    // Print Document Function
+    function printDocument() {
+        window.print(); // Trigger print dialog
+    }
+    // Calculate and update the total for a specific section
+    function calculateSectionTotal(section) {
+        console.log(`Calculating total for section: ${section}`);
+        let total = 0; // Initialize total to 0
+
+        // Loop through all inputs for this section
+        for (let i = 1; i <= 10; i++) {
+            const input = document.querySelector(`input[name="${section}_${i}"]`);
+            if (input && input.value) {
+                total += parseInt(input.value, 10) || 0; // Add value to total
+            }
+        }
+
+        // Update the total input field (readonly)
+        const totalField = document.querySelector(`input[name="${section}_total"]`);
+        if (totalField) {
+            totalField.value = total; // Display the total in the readonly input
+            console.log(`Total for section ${section} updated to: ${total}`);
+        } else {
+            console.error(`Total field for section ${section} not found!`);
+        }
+
+        // Update the imbalance total (at the bottom of the page)
+        const imbalanceTotal = document.getElementById(`imbalance-${section}-total`);
+        if (imbalanceTotal) {
+            imbalanceTotal.textContent = total; // Reflect total in imbalance grid
+        } else {
+            console.error(`Imbalance total for section ${section} not found!`);
+        }
+    }
+
+// Dynamically update Five Element interactions based on imbalances
+function updateFiveElementInteractions() {
+    console.log("Updating interactions between Five Elements based on assessment totals...");
+
+    // Get totals for each element from the imbalance grid
+    const totals = {
+        wood: parseInt(document.getElementById("imbalance-wood-total")?.textContent || "0", 10),
+        fire: parseInt(document.getElementById("imbalance-fire-total")?.textContent || "0", 10),
+        earth: parseInt(document.getElementById("imbalance-earth-total")?.textContent || "0", 10),
+        metal: parseInt(document.getElementById("imbalance-metal-total")?.textContent || "0", 10),
+        water: parseInt(document.getElementById("imbalance-water-total")?.textContent || "0", 10),
+    };
+
+    const summaryList = document.getElementById("five-element-summary");
+    summaryList.innerHTML = ""; // Clear previous summary results
+
+    const minimumScore = 3; // Minimum score for an element to be considered significant
+
+    // List of possible imbalances or conflicts
+    const interactions = [];
+
+    // Generate messages about imbalances between elements (nourishing or controlling dynamics)
+    if (totals.metal >= minimumScore && totals.water >= minimumScore) {
+        interactions.push({
+            description: "Metal may be failing to support Water, or Water may be overly controlling Metal.",
+            score: totals.metal + totals.water,
+        });
+    }
+    if (totals.water >= minimumScore && totals.wood >= minimumScore) {
+        interactions.push({
+            description: "Water may be failing to nourish Wood, or Wood may be overly controlling Water.",
+            score: totals.water + totals.wood,
+        });
+    }
+    if (totals.wood >= minimumScore && totals.fire >= minimumScore) {
+        interactions.push({
+            description: "Wood may be failing to nourish Fire, or Fire may be overly controlling Wood.",
+            score: totals.wood + totals.fire,
+        });
+    }
+    if (totals.fire >= minimumScore && totals.earth >= minimumScore) {
+        interactions.push({
+            description: "Fire may be failing to support Earth, or Earth may be overly controlling Fire.",
+            score: totals.fire + totals.earth,
+        });
+    }
+    if (totals.earth >= minimumScore && totals.metal >= minimumScore) {
+        interactions.push({
+            description: "Earth may be failing to support Metal, or Metal may be overly controlling Earth.",
+            score: totals.earth + totals.metal,
+        });
+    }
+
+    if (totals.metal >= minimumScore && totals.wood >= minimumScore) {
+        interactions.push({
+            description: "Metal may be overly controlling Wood, or Wood may be failing to regulate Metal.",
+            score: totals.metal + totals.wood,
+        });
+    }
+    if (totals.water >= minimumScore && totals.fire >= minimumScore) {
+        interactions.push({
+            description: "Water may be overly controlling Fire, or Fire may be failing to regulate Water.",
+            score: totals.water + totals.fire,
+        });
+    }
+    if (totals.fire >= minimumScore && totals.metal >= minimumScore) {
+        interactions.push({
+            description: "Fire may be overly controlling Metal, or Metal may be failing to regulate Fire.",
+            score: totals.fire + totals.metal,
+        });
+    }
+    if (totals.wood >= minimumScore && totals.earth >= minimumScore) {
+        interactions.push({
+            description: "Wood may be overly controlling Earth, or Earth may be failing to regulate Wood.",
+            score: totals.wood + totals.earth,
+        });
+    }
+    if (totals.earth >= minimumScore && totals.water >= minimumScore) {
+        interactions.push({
+            description: "Earth may be overly controlling Water, or Water may be failing to regulate Earth.",
+            score: totals.earth + totals.water,
+        });
+    }
+
+    if (totals.earth >= minimumScore && totals.wood >= minimumScore) {
+        interactions.push({
+            description: "Earth may be failing to constrain Wood, or Wood may be overly exhausting Earth.",
+            score: totals.earth + totals.wood,
+        });
+    }
+    if (totals.water >= minimumScore && totals.metal >= minimumScore) {
+        interactions.push({
+            description: "Water may be failing to support Metal, or Metal may be overly constraining Water.",
+            score: totals.water + totals.metal,
+        });
+    }
+    if (totals.metal >= minimumScore && totals.fire >= minimumScore) {
+        interactions.push({
+            description: "Metal may be failing to constrain Fire, or Fire may be overly exhausting Metal.",
+            score: totals.metal + totals.fire,
+        });
+    }
+    if (totals.wood >= minimumScore && totals.metal >= minimumScore) {
+        interactions.push({
+            description: "Wood may be failing to constrain Metal, or Metal may be overly exhausting Wood.",
+            score: totals.wood + totals.metal,
+        });
+    }
+    if (totals.water >= minimumScore && totals.earth >= minimumScore) {
+        interactions.push({
+            description: "Water may be failing to support Earth, or Earth may be overly constraining Water.",
+            score: totals.water + totals.earth,
+        });
+    }
+
+    // Sort interactions by importance (highest score first) and display the most significant ones
+    const topInteractions = interactions.sort((a, b) => b.score - a.score).slice(0, 3);
+
+    topInteractions.forEach((interaction) => {
+        const li = document.createElement("li");
+        li.textContent = interaction.description;
+        summaryList.appendChild(li);
+    });
+
+    console.log("Top 3 significant interactions between elements displayed.");
+}
+
+// Handle button click events
+function handleButtonClick(event) {
+    const button = event.target; // The clicked button
+    const buttonGroup = button.closest(".button-group"); // Parent button group
+    const dataSymptom = buttonGroup.getAttribute("data-symptom"); // Symptom identifier (e.g., wood_1)
+
+    if (!dataSymptom) {
+        console.error(`Button group missing "data-symptom" attribute.`);
+        return;
+    }
+
+    // Find the associated hidden input for this button group
+    const inputField = document.querySelector(`input[name="${dataSymptom}"]`);
+    if (!inputField) {
+        console.error(`Input field for symptom "${dataSymptom}" not found.`);
+        return;
+    }
+
+    // Get the value of the clicked button and update the hidden input
+    const newValue = button.getAttribute("data-value");
+    inputField.value = newValue;
+
+    // Highlight the clicked button and remove highlighting from others
+    buttonGroup.querySelectorAll("button").forEach((btn) => btn.classList.remove("active"));
+    button.classList.add("active"); // Apply "active" class only to the clicked button
+
+    // Log the updated state (optional)
+    console.log(`Symptom "${dataSymptom}" set to value: ${newValue}`);
+
+    // Recalculate section and interactions based on the updated value
+    const section = dataSymptom.split("_")[0]; // Extract the section prefix (e.g., "wood")
+    calculateSectionTotal(section);
+    updateFiveElementInteractions();
+}
+
+    // Attach event listeners to buttons on page load
+document.addEventListener("DOMContentLoaded", () => {
+    const allButtons = document.querySelectorAll(".button-group button");
+
+    // Attach click handlers to all buttons
+    allButtons.forEach((button) => {
+        button.addEventListener("click", handleButtonClick);
+    });
+
+    console.log(`Initialized ${allButtons.length} button event listeners.`);
+    
+    // Reset state of the page when it loads or is refreshed
+    resetState();
+});
+// Function to reset all symptom values and totals to their defaults on page load
+function resetState() {
+    console.log("Resetting the state of all inputs and totals...");
+
+    // Reset all hidden inputs back to their default value of 0
+    const allHiddenInputs = document.querySelectorAll('input[type="hidden"]');
+    allHiddenInputs.forEach((input) => {
+        input.value = "0"; // Set the initial hidden value to 0
+    });
+
+    // Reset all section totals (readonly input[type="number"])
+    const sectionTotals = document.querySelectorAll('input[type="number"][readonly]');
+    sectionTotals.forEach((totalInput) => {
+        totalInput.value = "0"; // Reset the section total to 0
+    });
+
+    // Reset all imbalance displays (e.g., wood_total under the imbalance grid)
+    const imbalanceTotals = document.querySelectorAll('[id^="imbalance-"]');
+    imbalanceTotals.forEach((imbalance) => {
+        imbalance.textContent = "0"; // Reset the imbalance display to 0
+    });
+
+    // Clear the "Five Element Theory" interaction summary
+    const summaryList = document.getElementById("five-element-summary");
+    summaryList.innerHTML = ""; // Clear previous interaction summaries
+
+    console.log("All inputs, totals, and summaries have been reset.");
+}
+</script>
+</body>
+</html>
