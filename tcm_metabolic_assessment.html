@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCM Metabolic Assessment - 5 Element Theory</title>
+    <style>
+        @media print {
+            body {
+                margin: 0;
+                padding: 0.5in;
+            }
+            .page-break {
+                page-break-after: always;
+            }
+            input[type="number"] {
+                border: none;
+                border-bottom: 1px solid #000;
+                width: 30px;
+            }
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.4;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #2c5f2d;
+            padding-bottom: 15px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            color: #2c5f2d;
+            font-size: 24px;
+        }
+        
+        .header p {
+            margin: 5px 0;
+            color: #555;
+            font-size: 12px;
+        }
+        
+        .patient-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .patient-info label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 3px;
+            font-size: 11px;
+            color: #333;
+        }
+        
+        .patient-info input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 11px;
+        }
+        
+        .scoring-guide {
+            background: #e8f4e8;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #2c5f2d;
+            font-size: 10px;
+        }
+        
+        .scoring-guide strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5f2d;
+        }
+        
+        .element-section {
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .element-header {
+            padding: 10px 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .wood-header { background: #4a7c59; }
+        .fire-header { background: #d64545; }
+        .earth-header { background: #c49b44; }
+        .metal-header { background: #9a9a9a; }
+        .water-header { background: #3b5998; }
+        
+        .element-description {
+            padding: 10px 15px;
+            background: #f7f7f7;
+            font-size: 10px;
+            font-style: italic;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .symptoms-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .symptoms-table tr {
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .symptoms-table tr:last-child {
+            border-bottom: none;
+        }
+        
+        .symptoms-table td {
+            padding: 8px 15px;
+            font-size: 11px;
+        }
+        
+        .symptom-name {
+            width: 75%;
+        }
+        
+        .symptom-score {
+            width: 25%;
+            text-align: center;
+        }
+        
+        .symptom-score input {
+            width: 40px;
+            padding: 4px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 11px;
+        }
+        
+        .total-row {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+        
+        .total-row td {
+            padding: 10px 15px;
+        }
+        
+        .imbalance-section {
+            margin-top: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .imbalance-section h3 {
+            margin-top: 0;
+            color: #2c5f2d;
+            font-size: 14px;
+            border-bottom: 2px solid #2c5f2d;
+            padding-bottom: 5px;
+        }
+        
+        .imbalance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .imbalance-item {
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+        }
+        
+        .imbalance-item input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
+        .notes-section {
+            margin-top: 15px;
+        }
+        
+        .notes-section label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 11px;
+        }
+        
+        .notes-section textarea {
+            width: 100%;
+            height: 60px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 11px;
+            font-family: Arial, sans-serif;
+            resize: vertical;
+        }
+        
+        .page-break {
+            margin: 30px 0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px solid #2c5f2d;
+            font-size: 9px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- PAGE 1 -->
+    <div class="header">
+        <h1>Traditional Chinese Medicine Metabolic Assessment</h1>
+        <p>Based on the Five Element Theory (Wu Xing)</p>
+    </div>
+    
+    <div class="patient-info">
+        <div>
+            <label>Patient Name:</label>
+            <input type="text" name="patient_name">
+        </div>
+        <div>
+            <label>Date:</label>
+            <input type="date" name="date">
+        </div>
+        <div>
+            <label>Practitioner:</label>
+            <input type="text" name="practitioner">
+        </div>
+        <div>
+            <label>Patient ID:</label>
+            <input type="text" name="patient_id">
+        </div>
+    </div>
+    
+    <div class="scoring-guide">
+        <strong>Scoring Instructions:</strong>
+        Rate each symptom on a scale of 0-3 based on frequency and severity:<br>
+        <strong>0</strong> = Never or almost never experience<br>
+        <strong>1</strong> = Occasionally experience, mild intensity (1-2 times per month)<br>
+        <strong>2</strong> = Frequently experience, moderate intensity (1-2 times per week)<br>
+        <strong>3</strong> = Constantly or almost constantly experience, severe intensity (daily or almost daily)
+    </div>
+    
+    <!-- WOOD ELEMENT -->
+    <div class="element-section">
+        <div class="element-header wood-header">
+            WOOD ELEMENT (木 Mù) - Liver & Gallbladder
+        </div>
+        <div class="element-description">
+            Wood represents growth, flexibility, and smooth flow of Qi. Governs the Liver (stores blood, ensures smooth flow of Qi and emotions) and Gallbladder (stores and secretes bile, controls decision-making). Imbalances manifest as stagnation, frustration, and tension.
+        </div>
+        <table class="symptoms-table">
+            <tr>
+                <td class="symptom-name">Irritability, anger, or frustration</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="wood_1"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Headaches (especially temporal or vertex)</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="wood_2"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Eye problems (dry eyes, blurry vision, floaters)</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="wood_3"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Muscle tension, stiffness, or spasms</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="wood_4"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Digestive issues (bloating, gas, alternating constipation/diarrhea)</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="wood_5"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Menstrual irregularities or PMS</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="wood_6"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Hypochondriac or rib-side pain</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="wood_7"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Difficulty making decisions or planning</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="wood_8"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Brittle or ridged nails</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="wood_9"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Sighing frequently</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="wood_10"></td>
+            </tr>
+            <tr class="total-row">
+                <td>WOOD ELEMENT TOTAL:</td>
+                <td class="symptom-score"><input type="number" name="wood_total" readonly style="background: #f0f0f0;"></td>
+            </tr>
+        </table>
+    </div>
+    
+    <!-- FIRE ELEMENT -->
+    <div class="element-section">
+        <div class="element-header fire-header">
+            FIRE ELEMENT (火 Huǒ) - Heart & Small Intestine
+        </div>
+        <div class="element-description">
+            Fire represents warmth, joy, and consciousness. Governs the Heart (houses the mind/spirit, controls blood circulation) and Small Intestine (separates pure from impure, absorbs nutrients). Imbalances manifest as anxiety, insomnia, and circulatory issues.
+        </div>
+        <table class="symptoms-table">
+            <tr>
+                <td class="symptom-name">Anxiety, panic attacks, or restlessness</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="fire_1"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Insomnia or poor sleep quality</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="fire_2"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Heart palpitations or irregular heartbeat</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="fire_3"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Chest tightness or discomfort</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="fire_4"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Excessive sweating (especially at night)</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="fire_5"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Speech difficulties (stuttering, incoherence)</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="fire_6"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Cold sores or mouth ulcers</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="fire_7"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Red facial complexion or red tongue tip</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="fire_8"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Poor memory or concentration</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="fire_9"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Difficulty discerning or absorbing information</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="fire_10"></td>
+            </tr>
+            <tr class="total-row">
+                <td>FIRE ELEMENT TOTAL:</td>
+                <td class="symptom-score"><input type="number" name="fire_total" readonly style="background: #f0f0f0;"></td>
+            </tr>
+        </table>
+    </div>
+    
+    <!-- EARTH ELEMENT -->
+    <div class="element-section">
+        <div class="element-header earth-header">
+            EARTH ELEMENT (土 Tǔ) - Spleen & Stomach
+        </div>
+        <div class="element-description">
+            Earth represents nourishment, stability, and transformation. Governs the Spleen (transforms food into Qi and blood, controls muscles and limbs) and Stomach (receives and ripens food). Imbalances manifest as digestive weakness, worry, and fatigue.
+        </div>
+        <table class="symptoms-table">
+            <tr>
+                <td class="symptom-name">Chronic fatigue or lethargy</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="earth_1"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Poor appetite or excessive hunger</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="earth_2"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Bloating or abdominal distension after eating</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="earth_3"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Loose stools or undigested food in stool</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="earth_4"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Weight gain or difficulty losing weight</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="earth_5"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Excessive worry or overthinking</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="earth_6"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Weak limbs or muscle atrophy</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="earth_7"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Easy bruising or bleeding</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="earth_8"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Cravings for sweets</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="earth_9"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Pale or yellowish complexion</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="earth_10"></td>
+            </tr>
+            <tr class="total-row">
+                <td>EARTH ELEMENT TOTAL:</td>
+                <td class="symptom-score"><input type="number" name="earth_total" readonly style="background: #f0f0f0;"></td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- PAGE 2 -->
+    <div class="header" style="margin-top: 0;">
+        <h1>TCM Metabolic Assessment - Page 2</h1>
+        <p>Five Element Theory (Wu Xing) - Continued</p>
+    </div>
+    
+    <!-- METAL ELEMENT -->
+    <div class="element-section">
+        <div class="element-header metal-header">
+            METAL ELEMENT (金 Jīn) - Lung & Large Intestine
+        </div>
+        <div class="element-description">
+            Metal represents structure, boundaries, and exchange. Governs the Lung (controls respiration and Qi, regulates water passages) and Large Intestine (eliminates waste, lets go of what's unnecessary). Imbalances manifest as grief, respiratory issues, and elimination problems.
+        </div>
+        <table class="symptoms-table">
+            <tr>
+                <td class="symptom-name">Shortness of breath or shallow breathing</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="metal_1"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Frequent colds, flu, or respiratory infections</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="metal_2"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Chronic cough or asthma</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="metal_3"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Skin problems (dryness, eczema, acne)</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="metal_4"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Constipation or difficulty with bowel movements</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="metal_5"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Grief, sadness, or inability to let go</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="metal_6"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Weak immune system</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="metal_7"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Nasal congestion or sinusitis</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="metal_8"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Spontaneous sweating during the day</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="metal_9"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Weak voice or reluctance to speak</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="metal_10"></td>
+            </tr>
+            <tr class="total-row">
+                <td>METAL ELEMENT TOTAL:</td>
+                <td class="symptom-score"><input type="number" name="metal_total" readonly style="background: #f0f0f0;"></td>
+            </tr>
+        </table>
+    </div>
+    
+    <!-- WATER ELEMENT -->
+    <div class="element-section">
+        <div class="element-header water-header">
+            WATER ELEMENT (水 Shuǐ) - Kidney & Bladder
+        </div>
+        <div class="element-description">
+            Water represents essence, willpower, and foundation. Governs the Kidney (stores essence/Jing, controls reproduction, growth, development, and bones) and Bladder (stores and excretes urine). Imbalances manifest as fear, weakness, and urinary issues.
+        </div>
+        <table class="symptoms-table">
+            <tr>
+                <td class="symptom-name">Lower back pain or weakness</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="water_1"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Frequent urination or urinary incontinence</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="water_2"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Fear, anxiety, or phobias</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="water_3"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Tinnitus or hearing problems</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="water_4"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Premature graying or hair loss</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="water_5"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Bone or teeth problems</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="water_6"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Cold extremities or feeling cold easily</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="water_7"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Low libido or sexual dysfunction</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="water_8"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Edema or water retention</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="water_9"></td>
+            </tr>
+            <tr>
+                <td class="symptom-name">Lack of willpower or motivation</td>
+                <td class="symptom-score"><input type="number" min="0" max="3" name="water_10"></td>
+            </tr>
+            <tr class="total-row">
+                <td>WATER ELEMENT TOTAL:</td>
+                <td class="symptom-score"><input type="number" name="water_total" readonly style="background: #f0f0f0;"></td>
+            </tr>
+        </table>
+    </div>
+    
+    <!-- IMBALANCE AND DOMINANCE SECTION -->
+    <div class="imbalance-section">
+        <h3>Element Imbalance Patterns</h3>
+        <p style="font-size: 10px; margin-bottom: 10px; font-style: italic;">
+            Check the patterns that apply based on the assessment. Higher scores (>15) suggest excess or stagnation; additional symptoms may indicate deficiency patterns within that element.
+        </p>
+        
+        <div class="imbalance-grid">
+            <div class="imbalance-item">
+                <input type="checkbox" name="imbalance_wood_excess">
+                <label>Wood Excess/Stagnation (Liver Qi Stagnation)</label>
+            </div>
+            <div class="imbalance-item">
+                <input type="checkbox" name="imbalance_wood_deficiency">
+                <label>Wood Deficiency (Liver Blood Deficiency)</label>
+            </div>
+            <div class="imbalance-item">
+                <input type="checkbox" name="imbalance_fire_excess">
+                <label>Fire Excess (Heart Fire/Heat)</label>
+            </div>
+            <div class="imbalance-item">
+                <input type="checkbox" name="imbalance_fire_deficiency">
+                <label>Fire Deficiency (Heart Qi/Blood Deficiency)</label>
+            </div>
+            <div class="imbalance-item">
+                <input type="checkbox" name="imbalance_earth_excess">
+                <label>Earth Excess (Spleen Dampness)</label>
+            </div>
+            <div class="imbalance-item">
+                <input type="checkbox" name="imbalance_earth_deficiency">
+                <label>Earth Deficiency (Spleen Qi Deficiency)</label>
+            </div>
+            <div class="imbalance-item">
+                <input type="checkbox" name="imbalance_metal_excess">
+                <label>Metal Excess (Lung Heat/Dryness)</label>
+            </div>
+            <div class="imbalance-item">
+                <input type="checkbox" name="imbalance_metal_deficiency">
+                <label>Metal Deficiency (Lung Qi Deficiency)</label>
+            </div>
+            <div class="imbalance-item">
+                <input type="checkbox" name="imbalance_water_excess">
+                <label>Water Excess (Kidney Yang Deficiency with Dampness)</label>
+            </div>
+            <div class="imbalance-item">
+                <input type="checkbox" name="imbalance_water_deficiency">
+                <label>Water Deficiency (Kidney Yin/Yang Deficiency)</label>
+            </div>
+        </div>
+        
+        <div style="margin-top: 15px;">
+            <strong style="font-size: 11px; color: #2c5f2d;">Dominant Element(s):</strong>
+            <p style="font-size: 10px; margin: 5px 0; font-style: italic;">
+                The element(s) with the highest score(s) typically indicate(s) where attention is most needed.
+            </p>
+            <div class="imbalance-grid" style="margin-top: 8px;">
+                <div class="imbalance-item">
+                    <input type="checkbox" name="dominant_wood">
+                    <label>Wood (Liver/Gallbladder)</label>
+                </div>
+                <div class="imbalance-item">
+                    <input type="checkbox" name="dominant_fire">
+                    <label>Fire (Heart/Small Intestine)</label>
+                </div>
+                <div class="imbalance-item">
+                    <input type="checkbox" name="dominant_earth">
+                    <label>Earth (Spleen/Stomach)</label>
+                </div>
+                <div class="imbalance-item">
+                    <input type="checkbox" name="dominant_metal">
+                    <label>Metal (Lung/Large Intestine)</label>
+                </div>
+                <div class="imbalance-item">
+                    <input type="checkbox" name="dominant_water">
+                    <label>Water (Kidney/Bladder)</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="notes-section">
+            <label>Clinical Notes & Treatment Recommendations:</label>
+            <textarea name="clinical_notes" placeholder="Note any patterns, interactions between elements, constitutional tendencies, and recommended treatment strategies..."></textarea>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p><strong>Five Element Cycle Relationships:</strong> Wood → Fire → Earth → Metal → Water → Wood (Generating/Nourishing Cycle)</p>
+        <p>Wood Controls Earth | Fire Controls Metal | Earth Controls Water | Metal Controls Wood | Water Controls Fire (Controlling/Balancing Cycle)</p>
+        <p style="margin-top: 8px;">© 2026 Traditional Chinese Medicine Metabolic Assessment | For Professional Use Only</p>
+    </div>
+    
+    <script>
+        // Auto-calculate totals
+        function calculateTotal(elementPrefix) {
+            let total = 0;
+            for (let i = 1; i <= 10; i++) {
+                const input = document.querySelector(`input[name="${elementPrefix}_${i}"]`);
+                if (input && input.value) {
+                    total += parseInt(input.value) || 0;
+                }
+            }
+            const totalInput = document.querySelector(`input[name="${elementPrefix}_total"]`);
+            if (totalInput) {
+                totalInput.value = total;
+            }
+        }
+        
+        // Add event listeners to all symptom inputs
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = ['wood', 'fire', 'earth', 'metal', 'water'];
+            elements.forEach(element => {
+                for (let i = 1; i <= 10; i++) {
+                    const input = document.querySelector(`input[name="${element}_${i}"]`);
+                    if (input) {
+                        input.addEventListener('input', () => calculateTotal(element));
+                    }
+                }
+            });
+        });
+        
+        // Print functionality
+        window.addEventListener('beforeprint', function() {
+            console.log('Preparing document for printing...');
+        });
+    </script>
+</body>
+</html>
