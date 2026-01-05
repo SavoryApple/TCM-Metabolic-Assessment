@@ -236,7 +236,7 @@
     <!-- PAGE 1 -->
     <div class="header">
         <h1>Traditional Chinese Medicine Metabolic Assessment</h1>
-        <p>Based on the Five Element Theory (Wu Xing)</p>
+        <p>Comprehensive Symptom Evaluation Form</p>
     </div>
     
     <div class="patient-info">
@@ -267,13 +267,10 @@
         <strong>3</strong> = Constantly or almost constantly experience, severe intensity (daily or almost daily)
     </div>
     
-    <!-- WOOD ELEMENT -->
+    <!-- SECTION 1 -->
     <div class="element-section">
         <div class="element-header wood-header">
-            WOOD ELEMENT (木 Mù) - Liver & Gallbladder
-        </div>
-        <div class="element-description">
-            Wood represents growth, flexibility, and smooth flow of Qi. Governs the Liver (stores blood, ensures smooth flow of Qi and emotions) and Gallbladder (stores and secretes bile, controls decision-making). Imbalances manifest as stagnation, frustration, and tension.
+            SECTION 1
         </div>
         <table class="symptoms-table">
             <tr>
@@ -317,19 +314,16 @@
                 <td class="symptom-score"><input type="number" min="0" max="3" name="wood_10"></td>
             </tr>
             <tr class="total-row">
-                <td>WOOD ELEMENT TOTAL:</td>
+                <td>SECTION 1 TOTAL:</td>
                 <td class="symptom-score"><input type="number" name="wood_total" min="0" max="30" readonly style="background: #f0f0f0;"></td>
             </tr>
         </table>
     </div>
     
-    <!-- FIRE ELEMENT -->
+    <!-- SECTION 2 -->
     <div class="element-section">
         <div class="element-header fire-header">
-            FIRE ELEMENT (火 Huǒ) - Heart & Small Intestine
-        </div>
-        <div class="element-description">
-            Fire represents warmth, joy, and consciousness. Governs the Heart (houses the mind/spirit, controls blood circulation) and Small Intestine (separates pure from impure, absorbs nutrients). Imbalances manifest as anxiety, insomnia, and circulatory issues.
+            SECTION 2
         </div>
         <table class="symptoms-table">
             <tr>
@@ -373,19 +367,16 @@
                 <td class="symptom-score"><input type="number" min="0" max="3" name="fire_10"></td>
             </tr>
             <tr class="total-row">
-                <td>FIRE ELEMENT TOTAL:</td>
+                <td>SECTION 2 TOTAL:</td>
                 <td class="symptom-score"><input type="number" name="fire_total" min="0" max="30" readonly style="background: #f0f0f0;"></td>
             </tr>
         </table>
     </div>
     
-    <!-- EARTH ELEMENT -->
+    <!-- SECTION 3 -->
     <div class="element-section">
         <div class="element-header earth-header">
-            EARTH ELEMENT (土 Tǔ) - Spleen & Stomach
-        </div>
-        <div class="element-description">
-            Earth represents nourishment, stability, and transformation. Governs the Spleen (transforms food into Qi and blood, controls muscles and limbs) and Stomach (receives and ripens food). Imbalances manifest as digestive weakness, worry, and fatigue.
+            SECTION 3
         </div>
         <table class="symptoms-table">
             <tr>
@@ -429,7 +420,7 @@
                 <td class="symptom-score"><input type="number" min="0" max="3" name="earth_10"></td>
             </tr>
             <tr class="total-row">
-                <td>EARTH ELEMENT TOTAL:</td>
+                <td>SECTION 3 TOTAL:</td>
                 <td class="symptom-score"><input type="number" name="earth_total" min="0" max="30" readonly style="background: #f0f0f0;"></td>
             </tr>
         </table>
@@ -440,16 +431,13 @@
     <!-- PAGE 2 -->
     <div class="header" style="margin-top: 0;">
         <h1>TCM Metabolic Assessment - Page 2</h1>
-        <p>Five Element Theory (Wu Xing) - Continued</p>
+        <p>Comprehensive Symptom Evaluation Form - Continued</p>
     </div>
     
-    <!-- METAL ELEMENT -->
+    <!-- SECTION 4 -->
     <div class="element-section">
         <div class="element-header metal-header">
-            METAL ELEMENT (金 Jīn) - Lung & Large Intestine
-        </div>
-        <div class="element-description">
-            Metal represents structure, boundaries, and exchange. Governs the Lung (controls respiration and Qi, regulates water passages) and Large Intestine (eliminates waste, lets go of what's unnecessary). Imbalances manifest as grief, respiratory issues, and elimination problems.
+            SECTION 4
         </div>
         <table class="symptoms-table">
             <tr>
@@ -493,19 +481,16 @@
                 <td class="symptom-score"><input type="number" min="0" max="3" name="metal_10"></td>
             </tr>
             <tr class="total-row">
-                <td>METAL ELEMENT TOTAL:</td>
+                <td>SECTION 4 TOTAL:</td>
                 <td class="symptom-score"><input type="number" name="metal_total" min="0" max="30" readonly style="background: #f0f0f0;"></td>
             </tr>
         </table>
     </div>
     
-    <!-- WATER ELEMENT -->
+    <!-- SECTION 5 -->
     <div class="element-section">
         <div class="element-header water-header">
-            WATER ELEMENT (水 Shuǐ) - Kidney & Bladder
-        </div>
-        <div class="element-description">
-            Water represents essence, willpower, and foundation. Governs the Kidney (stores essence/Jing, controls reproduction, growth, development, and bones) and Bladder (stores and excretes urine). Imbalances manifest as fear, weakness, and urinary issues.
+            SECTION 5
         </div>
         <table class="symptoms-table">
             <tr>
@@ -549,7 +534,7 @@
                 <td class="symptom-score"><input type="number" min="0" max="3" name="water_10"></td>
             </tr>
             <tr class="total-row">
-                <td>WATER ELEMENT TOTAL:</td>
+                <td>SECTION 5 TOTAL:</td>
                 <td class="symptom-score"><input type="number" name="water_total" min="0" max="30" readonly style="background: #f0f0f0;"></td>
             </tr>
         </table>
@@ -557,92 +542,90 @@
     
     <!-- IMBALANCE AND DOMINANCE SECTION -->
     <div class="imbalance-section">
-        <h3>Element Imbalance Patterns</h3>
+        <h3>Section Imbalance Patterns</h3>
         <p style="font-size: 10px; margin-bottom: 10px; font-style: italic;">
-            Check the patterns that apply based on the assessment. Higher scores (>15) suggest excess or stagnation; additional symptoms may indicate deficiency patterns within that element.
+            Check the patterns that apply based on the assessment. Higher scores (>15) suggest excess or stagnation; additional symptoms may indicate deficiency patterns within that section.
         </p>
         
         <div class="imbalance-grid">
             <div class="imbalance-item">
                 <input type="checkbox" name="imbalance_wood_excess">
-                <label>Wood Excess/Stagnation (Liver Qi Stagnation)</label>
+                <label>Section 1 - Excess/Stagnation</label>
             </div>
             <div class="imbalance-item">
                 <input type="checkbox" name="imbalance_wood_deficiency">
-                <label>Wood Deficiency (Liver Blood Deficiency)</label>
+                <label>Section 1 - Deficiency</label>
             </div>
             <div class="imbalance-item">
                 <input type="checkbox" name="imbalance_fire_excess">
-                <label>Fire Excess (Heart Fire/Heat)</label>
+                <label>Section 2 - Excess/Heat</label>
             </div>
             <div class="imbalance-item">
                 <input type="checkbox" name="imbalance_fire_deficiency">
-                <label>Fire Deficiency (Heart Qi/Blood Deficiency)</label>
+                <label>Section 2 - Deficiency</label>
             </div>
             <div class="imbalance-item">
                 <input type="checkbox" name="imbalance_earth_excess">
-                <label>Earth Excess (Spleen Dampness)</label>
+                <label>Section 3 - Excess/Dampness</label>
             </div>
             <div class="imbalance-item">
                 <input type="checkbox" name="imbalance_earth_deficiency">
-                <label>Earth Deficiency (Spleen Qi Deficiency)</label>
+                <label>Section 3 - Deficiency</label>
             </div>
             <div class="imbalance-item">
                 <input type="checkbox" name="imbalance_metal_excess">
-                <label>Metal Excess (Lung Heat/Dryness)</label>
+                <label>Section 4 - Excess/Dryness</label>
             </div>
             <div class="imbalance-item">
                 <input type="checkbox" name="imbalance_metal_deficiency">
-                <label>Metal Deficiency (Lung Qi Deficiency)</label>
+                <label>Section 4 - Deficiency</label>
             </div>
             <div class="imbalance-item">
                 <input type="checkbox" name="imbalance_water_excess">
-                <label>Water Excess (Kidney Yang Deficiency with Dampness)</label>
+                <label>Section 5 - Excess/Dampness</label>
             </div>
             <div class="imbalance-item">
                 <input type="checkbox" name="imbalance_water_deficiency">
-                <label>Water Deficiency (Kidney Yin/Yang Deficiency)</label>
+                <label>Section 5 - Deficiency</label>
             </div>
         </div>
         
         <div style="margin-top: 15px;">
-            <strong style="font-size: 11px; color: #2c5f2d;">Dominant Element(s):</strong>
+            <strong style="font-size: 11px; color: #2c5f2d;">Dominant Section(s):</strong>
             <p style="font-size: 10px; margin: 5px 0; font-style: italic;">
-                The element(s) with the highest score(s) typically indicate(s) where attention is most needed.
+                The section(s) with the highest score(s) typically indicate(s) where attention is most needed.
             </p>
             <div class="imbalance-grid" style="margin-top: 8px;">
                 <div class="imbalance-item">
                     <input type="checkbox" name="dominant_wood">
-                    <label>Wood (Liver/Gallbladder)</label>
+                    <label>Section 1</label>
                 </div>
                 <div class="imbalance-item">
                     <input type="checkbox" name="dominant_fire">
-                    <label>Fire (Heart/Small Intestine)</label>
+                    <label>Section 2</label>
                 </div>
                 <div class="imbalance-item">
                     <input type="checkbox" name="dominant_earth">
-                    <label>Earth (Spleen/Stomach)</label>
+                    <label>Section 3</label>
                 </div>
                 <div class="imbalance-item">
                     <input type="checkbox" name="dominant_metal">
-                    <label>Metal (Lung/Large Intestine)</label>
+                    <label>Section 4</label>
                 </div>
                 <div class="imbalance-item">
                     <input type="checkbox" name="dominant_water">
-                    <label>Water (Kidney/Bladder)</label>
+                    <label>Section 5</label>
                 </div>
             </div>
         </div>
         
         <div class="notes-section">
             <label>Clinical Notes & Treatment Recommendations:</label>
-            <textarea name="clinical_notes" placeholder="Note any patterns, interactions between elements, constitutional tendencies, and recommended treatment strategies..."></textarea>
+            <textarea name="clinical_notes" placeholder="Note any patterns, interactions between sections, constitutional tendencies, and recommended treatment strategies..."></textarea>
         </div>
     </div>
     
     <div class="footer">
-        <p><strong>Five Element Cycle Relationships:</strong> Wood → Fire → Earth → Metal → Water → Wood (Generating/Nourishing Cycle)</p>
-        <p>Wood Controls Earth | Fire Controls Metal | Earth Controls Water | Metal Controls Wood | Water Controls Fire (Controlling/Balancing Cycle)</p>
         <p style="margin-top: 8px;">© 2026 Traditional Chinese Medicine Metabolic Assessment | For Professional Use Only</p>
     </div>
     
