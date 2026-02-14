@@ -57,6 +57,10 @@ const maxScores = {
     water: 48   // 16 questions * 3
 };
 
+// Threshold constants for imbalance detection
+const MINIMUM_THRESHOLD_PERCENTAGE = 15; // Minimum 15% to be considered elevated
+const SIGNIFICANT_DIFFERENCE_THRESHOLD = 25; // 25% difference to flag as notable pattern
+
 // Calculate normalized score as percentage of maximum
 function getNormalizedScore(elementKey, rawScore) {
     const maxScore = maxScores[elementKey];
@@ -67,13 +71,13 @@ function getNormalizedScore(elementKey, rawScore) {
 function updateFiveElementInteractions() {
     console.log("Updating Five Element interactions...");
 
-    // Get raw totals
+    // Get raw totals (extract numeric value before percentage)
     const rawTotals = {
-        wood: parseInt(document.getElementById("imbalance-wood-total")?.textContent || "0", 10),
-        fire: parseInt(document.getElementById("imbalance-fire-total")?.textContent || "0", 10),
-        earth: parseInt(document.getElementById("imbalance-earth-total")?.textContent || "0", 10),
-        metal: parseInt(document.getElementById("imbalance-metal-total")?.textContent || "0", 10),
-        water: parseInt(document.getElementById("imbalance-water-total")?.textContent || "0", 10),
+        wood: parseInt(document.getElementById("imbalance-wood-total")?.textContent.split('(')[0] || "0", 10),
+        fire: parseInt(document.getElementById("imbalance-fire-total")?.textContent.split('(')[0] || "0", 10),
+        earth: parseInt(document.getElementById("imbalance-earth-total")?.textContent.split('(')[0] || "0", 10),
+        metal: parseInt(document.getElementById("imbalance-metal-total")?.textContent.split('(')[0] || "0", 10),
+        water: parseInt(document.getElementById("imbalance-water-total")?.textContent.split('(')[0] || "0", 10),
     };
 
     // Calculate normalized scores (percentage of max possible)
@@ -91,7 +95,7 @@ function updateFiveElementInteractions() {
     // Calculate average and determine threshold using normalized scores
     const normalizedSum = Object.values(normalizedScores).reduce((a, b) => a + b, 0);
     const normalizedAverage = normalizedSum / 5;
-    const threshold = Math.max(15, normalizedAverage * 1.2); // At least 15% or 20% above average
+    const threshold = Math.max(MINIMUM_THRESHOLD_PERCENTAGE, normalizedAverage * 1.2); // At least 15% or 20% above average
 
     const interactions = [];
 
@@ -164,7 +168,7 @@ function updateFiveElementInteractions() {
     // SPECIAL PATTERNS - only show if scores are significantly different
     
     // Individual element analysis - only if there's a significant difference (>25% difference) AND they're different sections
-    if (maxScore - minScore >= 25 && maxElements[0] !== minElements[0]) {
+    if (maxScore - minScore >= SIGNIFICANT_DIFFERENCE_THRESHOLD && maxElements[0] !== minElements[0]) {
         const maxSection = getSectionNumber(maxElements[0]);
         const minSection = getSectionNumber(minElements[0]);
         interactions.push(`Notable pattern: Section ${maxSection} score (${maxScore.toFixed(1)}%) is significantly higher than Section ${minSection} score (${minScore.toFixed(1)}%), suggesting a primary imbalance in that system.`);
