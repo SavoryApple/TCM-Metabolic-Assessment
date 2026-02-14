@@ -16,6 +16,10 @@ function calculateSectionTotal(section) {
         }
     });
 
+    // Calculate percentage of maximum possible
+    const maxScore = maxScores[section];
+    const percentage = maxScore > 0 ? ((total / maxScore) * 100).toFixed(1) : 0;
+
     // Update the total in the readonly field
     const totalField = document.querySelector(`input[name="${section}_total"]`);
     if (totalField) {
@@ -23,10 +27,10 @@ function calculateSectionTotal(section) {
         console.log(`Section ${section} total updated to: ${total}`);
     }
 
-    // Reflect the total in the imbalance grid
+    // Reflect the total in the imbalance grid with percentage
     const imbalanceDisplay = document.getElementById(`imbalance-${section}-total`);
     if (imbalanceDisplay) {
-        imbalanceDisplay.textContent = total;
+        imbalanceDisplay.textContent = `${total} (${percentage}%)`;
     }
 
     return total;
@@ -44,11 +48,27 @@ function getSectionNumber(elementKey) {
     return sectionMap[elementKey] || elementKey;
 }
 
+// Maximum possible scores for each section (number of questions * 3)
+const maxScores = {
+    wood: 39,   // 13 questions * 3
+    fire: 42,   // 14 questions * 3
+    earth: 48,  // 16 questions * 3
+    metal: 39,  // 13 questions * 3
+    water: 48   // 16 questions * 3
+};
+
+// Calculate normalized score as percentage of maximum
+function getNormalizedScore(elementKey, rawScore) {
+    const maxScore = maxScores[elementKey];
+    return maxScore > 0 ? (rawScore / maxScore) * 100 : 0;
+}
+
 // Update "Five Element Theory" interactions dynamically
 function updateFiveElementInteractions() {
     console.log("Updating Five Element interactions...");
 
-    const totals = {
+    // Get raw totals
+    const rawTotals = {
         wood: parseInt(document.getElementById("imbalance-wood-total")?.textContent || "0", 10),
         fire: parseInt(document.getElementById("imbalance-fire-total")?.textContent || "0", 10),
         earth: parseInt(document.getElementById("imbalance-earth-total")?.textContent || "0", 10),
@@ -56,101 +76,114 @@ function updateFiveElementInteractions() {
         water: parseInt(document.getElementById("imbalance-water-total")?.textContent || "0", 10),
     };
 
+    // Calculate normalized scores (percentage of max possible)
+    const normalizedScores = {
+        wood: getNormalizedScore('wood', rawTotals.wood),
+        fire: getNormalizedScore('fire', rawTotals.fire),
+        earth: getNormalizedScore('earth', rawTotals.earth),
+        metal: getNormalizedScore('metal', rawTotals.metal),
+        water: getNormalizedScore('water', rawTotals.water),
+    };
+
     const summaryList = document.getElementById("five-element-summary");
     summaryList.innerHTML = "";
 
-    // Calculate average and determine threshold
-    const totalSum = Object.values(totals).reduce((a, b) => a + b, 0);
-    const average = totalSum / 5;
-    const threshold = Math.max(6, average * 1.2); // At least 6 or 20% above average
+    // Calculate average and determine threshold using normalized scores
+    const normalizedSum = Object.values(normalizedScores).reduce((a, b) => a + b, 0);
+    const normalizedAverage = normalizedSum / 5;
+    const threshold = Math.max(15, normalizedAverage * 1.2); // At least 15% or 20% above average
 
     const interactions = [];
 
-    // Find the highest and lowest scores
-    const maxScore = Math.max(...Object.values(totals));
-    const minScore = Math.min(...Object.values(totals));
-    const maxElements = Object.keys(totals).filter(k => totals[k] === maxScore);
-    const minElements = Object.keys(totals).filter(k => totals[k] === minScore);
+    // Find the highest and lowest normalized scores
+    const maxScore = Math.max(...Object.values(normalizedScores));
+    const minScore = Math.min(...Object.values(normalizedScores));
+    const maxElements = Object.keys(normalizedScores).filter(k => normalizedScores[k] === maxScore);
+    const minElements = Object.keys(normalizedScores).filter(k => normalizedScores[k] === minScore);
+
+    console.log("Raw totals:", rawTotals);
+    console.log("Normalized scores (%):", normalizedScores);
+    console.log("Threshold:", threshold.toFixed(1) + "%");
 
     // Five Element Theory interactions based on generating and controlling cycles
     
     // CONTROLLING CYCLE IMBALANCES (Overacting/Insulting)
     
     // Wood overacting on Earth (Wood controls Earth)
-    if (totals.wood >= threshold && totals.earth >= threshold) {
+    if (normalizedScores.wood >= threshold && normalizedScores.earth >= threshold) {
         interactions.push(`Section 1 and Section 3 imbalance: Liver stress may be impairing digestive function and weakening the Spleen system.`);
     }
 
     // Earth overacting on Water (Earth controls Water)
-    if (totals.earth >= threshold && totals.water >= threshold) {
+    if (normalizedScores.earth >= threshold && normalizedScores.water >= threshold) {
         interactions.push(`Section 3 and Section 5 imbalance: Digestive dampness may be affecting kidney function and fluid metabolism.`);
     }
 
     // Water overacting on Fire (Water controls Fire)
-    if (totals.water >= threshold && totals.fire >= threshold) {
+    if (normalizedScores.water >= threshold && normalizedScores.fire >= threshold) {
         interactions.push(`Section 5 and Section 2 imbalance: Kidney deficiency creating heart symptoms or Water failing to properly control Fire.`);
     }
 
     // Fire overacting on Metal (Fire controls Metal)
-    if (totals.fire >= threshold && totals.metal >= threshold) {
+    if (normalizedScores.fire >= threshold && normalizedScores.metal >= threshold) {
         interactions.push(`Section 2 and Section 4 imbalance: Heart fire or emotional stress may be affecting lung function and immunity.`);
     }
 
     // Metal overacting on Wood (Metal controls Wood)
-    if (totals.metal >= threshold && totals.wood >= threshold) {
+    if (normalizedScores.metal >= threshold && normalizedScores.wood >= threshold) {
         interactions.push(`Section 4 and Section 1 imbalance: Respiratory or grief issues may be suppressing liver function and emotional flow.`);
     }
 
     // GENERATING CYCLE IMBALANCES (Mother not nourishing Child)
     
     // Water not generating Wood properly
-    if (totals.water >= threshold && totals.wood >= threshold) {
+    if (normalizedScores.water >= threshold && normalizedScores.wood >= threshold) {
         interactions.push(`Section 5 and Section 1 deficiency: Kidney essence depletion affecting liver blood and hormone regulation.`);
     }
 
     // Wood not generating Fire properly
-    if (totals.wood >= threshold && totals.fire >= threshold) {
+    if (normalizedScores.wood >= threshold && normalizedScores.fire >= threshold) {
         interactions.push(`Section 1 and Section 2 connection: Liver qi stagnation affecting heart spirit and creating heat symptoms.`);
     }
 
     // Fire not generating Earth properly
-    if (totals.fire >= threshold && totals.earth >= threshold) {
+    if (normalizedScores.fire >= threshold && normalizedScores.earth >= threshold) {
         interactions.push(`Section 2 and Section 3 connection: Heart/circulation weakness may be affecting digestive function and mental clarity.`);
     }
 
     // Earth not generating Metal properly
-    if (totals.earth >= threshold && totals.metal >= threshold) {
+    if (normalizedScores.earth >= threshold && normalizedScores.metal >= threshold) {
         interactions.push(`Section 3 and Section 4 imbalance: Digestive weakness affecting lung qi and immune function.`);
     }
 
     // Metal not generating Water properly
-    if (totals.metal >= threshold && totals.water >= threshold) {
+    if (normalizedScores.metal >= threshold && normalizedScores.water >= threshold) {
         interactions.push(`Section 4 and Section 5 deficiency: Lung qi weakness affecting kidney function and vital essence.`);
     }
 
     // SPECIAL PATTERNS - only show if scores are significantly different
     
-    // Individual element analysis - only if there's a significant difference AND they're different sections
-    if (maxScore - minScore >= 12 && maxElements[0] !== minElements[0]) {
+    // Individual element analysis - only if there's a significant difference (>25% difference) AND they're different sections
+    if (maxScore - minScore >= 25 && maxElements[0] !== minElements[0]) {
         const maxSection = getSectionNumber(maxElements[0]);
         const minSection = getSectionNumber(minElements[0]);
-        interactions.push(`Notable pattern: Section ${maxSection} score (${maxScore}) is significantly higher than Section ${minSection} score (${minScore}), suggesting a primary imbalance in that system.`);
+        interactions.push(`Notable pattern: Section ${maxSection} score (${maxScore.toFixed(1)}%) is significantly higher than Section ${minSection} score (${minScore.toFixed(1)}%), suggesting a primary imbalance in that system.`);
     }
 
     // Specific element interpretations - only add these if the section is notably elevated
-    if (totals.wood >= threshold && totals.wood === maxScore) {
+    if (normalizedScores.wood >= threshold && normalizedScores.wood === maxScore) {
         interactions.push(`Section 1 primary imbalance: Focus on stress management, liver detoxification, hormone balance, and ensuring smooth flow of energy.`);
     }
-    if (totals.fire >= threshold && totals.fire === maxScore) {
+    if (normalizedScores.fire >= threshold && normalizedScores.fire === maxScore) {
         interactions.push(`Section 2 primary imbalance: Attention needed for cardiovascular health, sleep quality, emotional regulation, and nutrient absorption.`);
     }
-    if (totals.earth >= threshold && totals.earth === maxScore) {
+    if (normalizedScores.earth >= threshold && normalizedScores.earth === maxScore) {
         interactions.push(`Section 3 primary imbalance: Strengthen digestive function, reduce overthinking, stabilize blood sugar, and nourish the center.`);
     }
-    if (totals.metal >= threshold && totals.metal === maxScore) {
+    if (normalizedScores.metal >= threshold && normalizedScores.metal === maxScore) {
         interactions.push(`Section 4 primary imbalance: Support respiratory health, strengthen immunity, improve elimination, and address grief/letting go.`);
     }
-    if (totals.water >= threshold && totals.water === maxScore) {
+    if (normalizedScores.water >= threshold && normalizedScores.water === maxScore) {
         interactions.push(`Section 5 primary imbalance: Restore vital essence, support adrenal/kidney function, address fear, and strengthen bones.`);
     }
 
@@ -188,8 +221,9 @@ function updateFiveElementInteractions() {
     }
 
     console.log("Interactions updated successfully.");
-    console.log("Current totals:", totals);
-    console.log("Threshold:", threshold);
+    console.log("Raw totals:", rawTotals);
+    console.log("Normalized scores (%):", normalizedScores);
+    console.log("Threshold:", threshold.toFixed(1) + "%");
     console.log("Displaying interactions:", displayInteractions);
 }
 
