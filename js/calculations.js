@@ -50,11 +50,11 @@ function getSectionNumber(elementKey) {
 
 // Maximum possible scores for each section (number of questions * 3)
 const maxScores = {
-    wood: 39,   // 13 questions * 3
+    wood: 45,   // 15 questions * 3
     fire: 42,   // 14 questions * 3
     earth: 48,  // 16 questions * 3
-    metal: 39,  // 13 questions * 3
-    water: 48   // 16 questions * 3
+    metal: 51,  // 17 questions * 3
+    water: 51   // 17 questions * 3
 };
 
 // Threshold constants for imbalance detection

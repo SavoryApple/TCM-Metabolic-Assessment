@@ -21,7 +21,9 @@ const symptomData = {
                     "Blood sugar swings, sugar cravings, or feeling shaky when hungry",
                     "Menstrual irregularities or PMS (for women)",
                     "Painful menstrual cramps",
-                    "Low testosterone or male hormone symptoms (for men)"
+                    "Low testosterone or male hormone symptoms (for men)",
+                    "Rib pain or hypochondriac discomfort",
+                    "Tendon problems (weakness, tightness)"
                 ]
             }
         ]
@@ -103,7 +105,11 @@ const symptomData = {
                     "Constipation or irregular bowel movements",
                     "Diarrhea or loose stools",
                     "Hemorrhoids or rectal issues",
-                    "Abdominal cramping or discomfort"
+                    "Abdominal cramping or discomfort",
+                    "Nasal polyps or chronic sinus infections",
+                    "Poor sense of smell",
+                    "Mucus in stool or excessive phlegm production",
+                    "Autoimmune skin conditions (psoriasis, vitiligo)"
                 ]
             }
         ]
@@ -132,7 +138,8 @@ const symptomData = {
                     "Extreme exhaustion or inability to handle stress",
                     "Difficulty waking up in the morning despite adequate sleep",
                     "Craving salt or salty foods",
-                    "Low blood pressure or dizziness upon standing"
+                    "Low blood pressure or dizziness upon standing",
+                    "Dark circles under eyes or puffy eyes"
                 ]
             }
         ]
