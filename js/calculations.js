@@ -3,6 +3,9 @@ function printDocument() {
     window.print();
 }
 
+// Global object to track subsection boundaries
+const subsectionBoundaries = {};
+
 // Calculate total for each section dynamically
 function calculateSectionTotal(section) {
     console.log(`Calculating total for section: ${section}`);
@@ -23,17 +26,540 @@ function calculateSectionTotal(section) {
     // Update the total in the readonly field
     const totalField = document.querySelector(`input[name="${section}_total"]`);
     if (totalField) {
-        totalField.value = total;
+        totalField.value = `${total} / ${maxScore}`;
         console.log(`Section ${section} total updated to: ${total}`);
     }
 
     // Reflect the total in the imbalance grid with percentage
     const imbalanceDisplay = document.getElementById(`imbalance-${section}-total`);
     if (imbalanceDisplay) {
-        imbalanceDisplay.textContent = `${total} (${percentage}%)`;
+        imbalanceDisplay.textContent = `${total} / ${maxScore} (${percentage}%)`;
     }
 
     return total;
+}
+
+// Calculate subsection score by counting symptoms within boundaries
+function calculateSubsectionScore(sectionKey, subsectionKey) {
+    if (!subsectionBoundaries[sectionKey] || !subsectionBoundaries[sectionKey][subsectionKey]) {
+        console.warn(`No boundaries found for ${sectionKey} - ${subsectionKey}`);
+        return { total: 0, maxScore: 0 };
+    }
+
+    const { start, end, maxScore } = subsectionBoundaries[sectionKey][subsectionKey];
+    let total = 0;
+
+    console.log(`Calculating ${sectionKey} ${subsectionKey}: symptoms ${start} to ${end}`);
+
+    // Sum up all symptom scores within this subsection's range
+    for (let i = start; i <= end; i++) {
+        const inputName = `${sectionKey}_${i}`;
+        const input = document.querySelector(`input[name="${inputName}"]`);
+        if (input && input.value) {
+            const value = parseInt(input.value, 10) || 0;
+            total += value;
+            console.log(`  ${inputName} = ${value}`);
+        }
+    }
+
+    console.log(`  Total: ${total}/${maxScore}`);
+    return { total, maxScore };
+}
+
+// Determine category based on percentage and thresholds
+function determineCategory(percentage) {
+    if (percentage < 30) return 'Healthy';
+    if (percentage >= 30 && percentage < 50) return 'Mild';
+    if (percentage >= 50 && percentage < 70) return 'Moderate';
+    if (percentage >= 70) return 'Severe';
+    
+    return 'Unknown';
+}
+
+// Generate practitioner recommendations
+function generatePractitionerRecommendations() {
+    if (typeof diagnosticData === 'undefined') {
+        console.warn('Diagnostic data not loaded. Make sure diagnostic-logic.js is included.');
+        return;
+    }
+
+    console.log("=== Generating Practitioner Recommendations ===");
+
+    const recommendations = {
+        subsectionAnalysis: {},
+        recommendedTests: new Set(),
+        totalCost: 0,
+        tcmPatterns: [],
+        endocrineSquareFindings: [],
+        clinicalPatterns: []
+    };
+
+    // Analyze each section and subsection
+    Object.keys(diagnosticData).forEach(sectionKey => {
+        const sectionData = diagnosticData[sectionKey];
+        const subsections = sectionData.subsections;
+        
+        recommendations.subsectionAnalysis[sectionKey] = {};
+
+        Object.keys(subsections).forEach(subsectionKey => {
+            const subsection = subsections[subsectionKey];
+            
+            // Calculate subsection score
+            const subsectionScore = calculateSubsectionScore(sectionKey, subsectionKey);
+            const percentage = subsectionScore.maxScore > 0 
+                ? (subsectionScore.total / subsectionScore.maxScore) * 100 
+                : 0;
+            const category = determineCategory(percentage);
+
+            console.log(`${sectionKey} ${subsectionKey}: ${subsectionScore.total}/${subsectionScore.maxScore} = ${percentage.toFixed(1)}% (${category})`);
+
+            recommendations.subsectionAnalysis[sectionKey][subsectionKey] = {
+                name: subsection.name,
+                score: subsectionScore.total,
+                maxScore: subsectionScore.maxScore,
+                percentage: percentage.toFixed(1),
+                category: category,
+                pattern: subsection.pattern,
+                keyLabs: subsection.keyLabs,
+                tests: subsection.tests,
+                testCodes: subsection.testCodes
+            };
+
+            // Add recommended tests if category is Mild or higher (>30%)
+            if (percentage >= 30) {
+                console.log(`  Elevated! Adding tests: ${subsection.tests}`);
+                if (subsection.testCodes && Array.isArray(subsection.testCodes)) {
+                    subsection.testCodes.forEach(code => recommendations.recommendedTests.add(code));
+                }
+                
+                // Add TCM pattern
+                recommendations.tcmPatterns.push({
+                    section: sectionKey,
+                    subsection: subsectionKey,
+                    category: category,
+                    pattern: subsection.pattern,
+                    percentage: percentage.toFixed(1)
+                });
+            }
+        });
+    });
+
+    // Analyze Endocrine Square patterns
+    analyzeEndocrineSquare(recommendations);
+
+    // Analyze Clinical Pattern Combinations
+    analyzeClinicalPatterns(recommendations);
+
+    // Calculate total cost
+    calculateTestCosts(recommendations);
+
+    // Display recommendations
+    displayPractitionerRecommendations(recommendations);
+
+    return recommendations;
+}
+
+// Analyze Endocrine Square patterns
+function analyzeEndocrineSquare(recommendations) {
+    if (typeof endocrineSquarePatterns === 'undefined') return;
+
+    const under6 = recommendations.subsectionAnalysis['endocrineUnder'] || {};
+    const over7 = recommendations.subsectionAnalysis['endocrineOver'] || {};
+
+    // Check for Endocrine Square patterns
+    Object.keys(endocrineSquarePatterns).forEach(patternKey => {
+        const pattern = endocrineSquarePatterns[patternKey];
+        let detected = false;
+        let details = '';
+
+        // HPT pattern (6A/7A)
+        if (patternKey === 'HPT (6A/7A)') {
+            const sixA = under6['6A'];
+            const sevenA = over7['7A'];
+            if ((sixA && parseFloat(sixA.percentage) >= 30) || (sevenA && parseFloat(sevenA.percentage) >= 30)) {
+                detected = true;
+                details = `6A: ${sixA?.percentage || 0}%, 7A: ${sevenA?.percentage || 0}%`;
+            }
+        }
+
+        // HPA pattern (6B/7B)
+        if (patternKey === 'HPA (6B/7B)') {
+            const sixB = under6['6B'];
+            const sevenB = over7['7B'];
+            if ((sixB && parseFloat(sixB.percentage) >= 30) || (sevenB && parseFloat(sevenB.percentage) >= 30)) {
+                detected = true;
+                details = `6B: ${sixB?.percentage || 0}%, 7B: ${sevenB?.percentage || 0}%`;
+            }
+        }
+
+        // HPF pattern (6C/7C)
+        if (patternKey === 'HPF (6C/7C)') {
+            const sixC = under6['6C'];
+            const sevenC = over7['7C'];
+            if ((sixC && parseFloat(sixC.percentage) >= 30) || (sevenC && parseFloat(sevenC.percentage) >= 30)) {
+                detected = true;
+                details = `6C: ${sixC?.percentage || 0}%, 7C: ${sevenC?.percentage || 0}%`;
+            }
+        }
+
+        // HPO pattern (6D/7D)
+        if (patternKey === 'HPO (6D/7D)') {
+            const sixD = under6['6D'];
+            const sevenD = over7['7D'];
+            if ((sixD && parseFloat(sixD.percentage) >= 30) || (sevenD && parseFloat(sevenD.percentage) >= 30)) {
+                detected = true;
+                details = `6D: ${sixD?.percentage || 0}%, 7D: ${sevenD?.percentage || 0}%`;
+            }
+        }
+
+        if (detected) {
+            recommendations.endocrineSquareFindings.push({
+                pattern: patternKey,
+                fullName: pattern.fullName,
+                symptoms: pattern.symptoms,
+                tcm: pattern.tcm,
+                details: details
+            });
+        }
+    });
+}
+
+// Analyze Clinical Pattern Combinations
+function analyzeClinicalPatterns(recommendations) {
+    if (typeof clinicalPatterns === 'undefined') return;
+
+    const under6 = recommendations.subsectionAnalysis['endocrineUnder'] || {};
+    const over7 = recommendations.subsectionAnalysis['endocrineOver'] || {};
+
+    // Check for specific clinical pattern combinations
+    Object.keys(clinicalPatterns).forEach(patternName => {
+        const pattern = clinicalPatterns[patternName];
+        let detected = false;
+        let reasoning = '';
+
+        // Pure Hypo
+        if (patternName === 'Pure Hypo') {
+            const sixA = under6['6A'];
+            const sixB = under6['6B'];
+            const sixC = under6['6C'];
+            const sixD = under6['6D'];
+            const allUnderElevated = [sixA, sixB, sixC, sixD].every(sub => 
+                sub && parseFloat(sub.percentage) >= 30
+            );
+            const allOverLow = ['7A', '7B', '7C', '7D'].every(key => {
+                const sub = over7[key];
+                return !sub || parseFloat(sub.percentage) < 30;
+            });
+            if (allUnderElevated && allOverLow) {
+                detected = true;
+                reasoning = 'All Section 6 subsections elevated (≥30%), all Section 7 subsections low (<30%)';
+            }
+        }
+
+        // Pure Hyper
+        if (patternName === 'Pure Hyper') {
+            const sevenA = over7['7A'];
+            const sevenB = over7['7B'];
+            const sevenC = over7['7C'];
+            const sevenD = over7['7D'];
+            const allOverElevated = [sevenA, sevenB, sevenC, sevenD].every(sub => 
+                sub && parseFloat(sub.percentage) >= 30
+            );
+            const allUnderLow = ['6A', '6B', '6C', '6D'].every(key => {
+                const sub = under6[key];
+                return !sub || parseFloat(sub.percentage) < 30;
+            });
+            if (allOverElevated && allUnderLow) {
+                detected = true;
+                reasoning = 'All Section 7 subsections elevated (≥30%), all Section 6 subsections low (<30%)';
+            }
+        }
+
+        // Mixed (easy)
+        if (patternName === 'Mixed (easy)') {
+            const bothElevatedCount = ['A', 'B', 'C', 'D'].filter(letter => {
+                const under = under6[`6${letter}`];
+                const over = over7[`7${letter}`];
+                return under && over && 
+                       parseFloat(under.percentage) >= 30 && 
+                       parseFloat(over.percentage) >= 30;
+            }).length;
+            if (bothElevatedCount >= 1 && bothElevatedCount <= 2) {
+                detected = true;
+                reasoning = `${bothElevatedCount} subsection(s) with both under/over elevated`;
+            }
+        }
+
+        // HPT cycling
+        if (patternName === 'HPT cycling') {
+            const sixA = under6['6A'];
+            const sevenA = over7['7A'];
+            if (sixA && sevenA && 
+                parseFloat(sixA.percentage) >= 30 && 
+                parseFloat(sevenA.percentage) >= 30) {
+                detected = true;
+                reasoning = 'Both 6A and 7A elevated (Hashitoxicosis pattern)';
+            }
+        }
+
+        // HPA cycling
+        if (patternName === 'HPA cycling') {
+            const sixB = under6['6B'];
+            const sevenB = over7['7B'];
+            if (sixB && sevenB && 
+                parseFloat(sixB.percentage) >= 30 && 
+                parseFloat(sevenB.percentage) >= 30) {
+                detected = true;
+                reasoning = 'Both 6B and 7B elevated (Cortisol rhythm disruption)';
+            }
+        }
+
+        // Dysglycemia
+        if (patternName === 'Dysglycemia') {
+            const sixC = under6['6C'];
+            const sevenC = over7['7C'];
+            if (sixC && sevenC && 
+                parseFloat(sixC.percentage) >= 30 && 
+                parseFloat(sevenC.percentage) >= 30) {
+                detected = true;
+                reasoning = 'Both 6C and 7C elevated (Blood sugar dysregulation)';
+            }
+        }
+
+        // HPO square
+        if (patternName === 'HPO square') {
+            const sixD = under6['6D'];
+            const sevenD = over7['7D'];
+            if (sixD && sevenD && 
+                parseFloat(sixD.percentage) >= 30 && 
+                parseFloat(sevenD.percentage) >= 30) {
+                detected = true;
+                reasoning = 'Both 6D and 7D elevated (Reproductive hormone imbalance)';
+            }
+        }
+
+        // Estrogen dominance
+        if (patternName === 'Estrogen dominance') {
+            const sixD = under6['6D'];
+            const sevenD = over7['7D'];
+            if (sixD && sevenD && 
+                parseFloat(sixD.percentage) < 30 && 
+                parseFloat(sevenD.percentage) >= 50) {
+                detected = true;
+                reasoning = '6D low, 7D high (Estrogen dominance pattern)';
+            }
+        }
+
+        // Female collapse
+        if (patternName === 'Female collapse') {
+            const allSections = ['6A', '6B', '6C', '6D'].every(key => {
+                const sub = under6[key];
+                return sub && parseFloat(sub.percentage) >= 50;
+            });
+            if (allSections) {
+                detected = true;
+                reasoning = 'All Section 6 subsections ≥50% (Multi-system collapse)';
+            }
+        }
+
+        if (detected) {
+            recommendations.clinicalPatterns.push({
+                pattern: patternName,
+                range: pattern.range,
+                tcm: pattern.tcm,
+                clinicalSignificance: pattern.clinicalSignificance,
+                reasoning: reasoning
+            });
+        }
+    });
+}
+
+// Calculate test costs based on recommended tests
+function calculateTestCosts(recommendations) {
+    if (typeof testCatalog === 'undefined') return;
+
+    const testSet = new Set();
+    
+    recommendations.recommendedTests.forEach(testCode => {
+        // Find the test in the catalog
+        Object.keys(testCatalog).forEach(catalogKey => {
+            if (catalogKey === testCode || testCatalog[catalogKey].name.includes(testCode)) {
+                const test = testCatalog[catalogKey];
+                if (!testSet.has(test.name)) {
+                    testSet.add(test.name);
+                    recommendations.totalCost += test.price || 0;
+                }
+            }
+        });
+    });
+}
+
+// Display practitioner recommendations in the UI
+function displayPractitionerRecommendations(recommendations) {
+    const container = document.getElementById('practitioner-recommendations');
+    if (!container) {
+        console.warn('Practitioner recommendations container not found');
+        return;
+    }
+
+    let html = '<h3>Practitioner Diagnostic Recommendations</h3>';
+
+    // Subsection Analysis
+    html += '<div class="subsection-analysis"><h4>Subsection Analysis</h4>';
+    
+    let hasElevatedSubsections = false;
+    
+    Object.keys(recommendations.subsectionAnalysis).forEach(sectionKey => {
+        const section = recommendations.subsectionAnalysis[sectionKey];
+        const displayName = getSectionDisplayName(sectionKey);
+        
+        // Check if this section has any elevated subsections
+        const elevatedSubsections = Object.keys(section).filter(subsectionKey => {
+            const subsection = section[subsectionKey];
+            return parseFloat(subsection.percentage) >= 30;
+        });
+        
+        if (elevatedSubsections.length > 0) {
+            hasElevatedSubsections = true;
+            html += `<div class="section-analysis"><h5>${displayName.main}</h5>`;
+            html += '<table class="analysis-table"><thead><tr><th>Subsection</th><th>Score</th><th>%</th><th>Category</th><th>TCM Pattern</th><th>Key Labs</th><th>Tests</th></tr></thead><tbody>';
+            
+            Object.keys(section).forEach(subsectionKey => {
+                const subsection = section[subsectionKey];
+                if (parseFloat(subsection.percentage) >= 30) {
+                    html += `<tr class="category-${subsection.category.toLowerCase()}">`;
+                    html += `<td><strong>${subsectionKey}</strong>: ${subsection.name}</td>`;
+                    html += `<td>${subsection.score}/${subsection.maxScore}</td>`;
+                    html += `<td><strong>${subsection.percentage}%</strong></td>`;
+                    html += `<td><strong>${subsection.category}</strong></td>`;
+                    html += `<td>${subsection.pattern}</td>`;
+                    html += `<td>${subsection.keyLabs}</td>`;
+                    html += `<td>${subsection.tests}</td>`;
+                    html += '</tr>';
+                }
+            });
+            
+            html += '</tbody></table></div>';
+        }
+    });
+    
+    if (!hasElevatedSubsections) {
+        html += '<p><em>No elevated subsections detected. All scores are below 30% threshold.</em></p>';
+    }
+    
+    html += '</div>';
+
+    // TCM Patterns Summary
+    if (recommendations.tcmPatterns.length > 0) {
+        html += '<div class="tcm-patterns"><h4>TCM Pattern Diagnosis</h4><ul>';
+        recommendations.tcmPatterns.forEach(pattern => {
+            html += `<li><strong>${pattern.pattern}</strong> (${pattern.category}, ${pattern.percentage}%)</li>`;
+        });
+        html += '</ul></div>';
+    }
+
+    // Endocrine Square Findings
+    if (recommendations.endocrineSquareFindings.length > 0) {
+        html += '<div class="endocrine-square"><h4>Endocrine Square Analysis</h4>';
+        recommendations.endocrineSquareFindings.forEach(finding => {
+            html += `<div class="square-finding">`;
+            html += `<strong>${finding.pattern}:</strong> ${finding.fullName}<br>`;
+            html += `Symptoms: ${finding.symptoms}<br>`;
+            html += `TCM: ${finding.tcm}<br>`;
+            html += `Details: ${finding.details}`;
+            html += `</div>`;
+        });
+        html += '</div>';
+    }
+
+    // Clinical Pattern Combinations
+    if (recommendations.clinicalPatterns.length > 0) {
+        html += '<div class="clinical-patterns"><h4>Clinical Pattern Combinations</h4>';
+        recommendations.clinicalPatterns.forEach(pattern => {
+            html += `<div class="clinical-pattern">`;
+            html += `<strong>${pattern.pattern}</strong><br>`;
+            html += `TCM: ${pattern.tcm}<br>`;
+            html += `Clinical Significance: ${pattern.clinicalSignificance}<br>`;
+            html += `Reasoning: ${pattern.reasoning}`;
+            html += `</div>`;
+        });
+        html += '</div>';
+    }
+
+    // Recommended Tests and Key Labs - Grouped by Subsection
+    html += '<div class="recommended-tests"><h4>Recommended Laboratory Tests</h4>';
+    
+    let totalCost = 0;
+    let hasRecommendations = false;
+    
+    // Iterate through each section and subsection
+    Object.keys(recommendations.subsectionAnalysis).forEach(sectionKey => {
+        const section = recommendations.subsectionAnalysis[sectionKey];
+        
+        Object.keys(section).forEach(subsectionKey => {
+            const subsection = section[subsectionKey];
+            
+            // Only show if elevated (≥30%)
+            if (parseFloat(subsection.percentage) >= 30) {
+                hasRecommendations = true;
+                
+                html += `<div class="subsection-test-group">`;
+                html += `<h5 class="subsection-test-header"><strong>${subsectionKey}</strong> ${subsection.name}<br><span class="subsection-subtitle">${diagnosticData[sectionKey].subsections[subsectionKey].subtitle}</span><br><span class="subsection-status">(${subsection.percentage}% - ${subsection.category})</span></h5>`;
+                
+                // Key Labs
+                html += `<div class="key-labs-section">`;
+                html += `<p class="labs-label"><strong>Key Labs to Monitor:</strong></p>`;
+                html += `<p class="labs-content">${subsection.keyLabs}</p>`;
+                html += `</div>`;
+                
+                // Recommended Test Panels
+                html += `<div class="test-panels-section">`;
+                html += `<p class="labs-label"><strong>Recommended Test Panels:</strong></p>`;
+                html += `<ul class="test-list-with-prices">`;
+                
+                // Get unique tests for this subsection
+                const subsectionTests = new Map();
+                
+                if (subsection.testCodes && Array.isArray(subsection.testCodes)) {
+                    subsection.testCodes.forEach(testCode => {
+                        // Find the test in the catalog
+                        Object.keys(testCatalog).forEach(catalogKey => {
+                            if (catalogKey === testCode || testCatalog[catalogKey].name.includes(testCode)) {
+                                const test = testCatalog[catalogKey];
+                                if (!subsectionTests.has(test.name)) {
+                                    subsectionTests.set(test.name, test.price);
+                                }
+                            }
+                        });
+                    });
+                }
+                
+                // Display tests with prices
+                let subsectionCost = 0;
+                subsectionTests.forEach((price, testName) => {
+                    html += `<li><span class="test-name">${testName}</span><span class="test-price">$${price.toFixed(2)}</span></li>`;
+                    subsectionCost += price;
+                    totalCost += price;
+                });
+                
+                html += `</ul>`;
+                html += `<p class="subsection-subtotal">Subsection ${subsectionKey} Subtotal: <strong>$${subsectionCost.toFixed(2)}</strong></p>`;
+                html += `</div>`;
+                
+                html += `</div>`; // Close subsection-test-group
+            }
+        });
+    });
+    
+    if (!hasRecommendations) {
+        html += '<p><em>No test recommendations at this time.</em></p>';
+    } else {
+        html += `<p class="total-cost"><strong>Estimated Total Cost: $${totalCost.toFixed(2)}</strong></p>`;
+    }
+    
+    html += '</div>';
+
+    container.innerHTML = html;
 }
 
 // Helper function to get section number from element key
@@ -43,192 +569,58 @@ function getSectionNumber(elementKey) {
         'fire': '2',
         'earth': '3',
         'metal': '4',
-        'water': '5'
+        'water': '5',
+        'endocrineUnder': '6',
+        'endocrineOver': '7'
     };
     return sectionMap[elementKey] || elementKey;
 }
 
+// Helper function to get section display name
+function getSectionDisplayName(elementKey) {
+    const displayMap = {
+        'wood': { main: 'WOOD', sub: 'Liver & Gallbladder' },
+        'fire': { main: 'FIRE', sub: 'Heart & Small Intestine' },
+        'earth': { main: 'EARTH', sub: 'Spleen & Stomach' },
+        'metal': { main: 'METAL', sub: 'Lung & Large Intestine' },
+        'water': { main: 'WATER', sub: 'Kidney & Urinary Bladder' },
+        'endocrineUnder': { main: 'ENDOCRINE — UNDERACTIVITY', sub: 'Thyroid • Adrenal • Blood Sugar • Reproductive' },
+        'endocrineOver': { main: 'ENDOCRINE — OVERACTIVITY', sub: 'Thyroid • Adrenal • Blood Sugar • Reproductive' }
+    };
+    return displayMap[elementKey] || { main: 'SECTION', sub: '' };
+}
+
 // Maximum possible scores for each section (number of questions * 3)
 const maxScores = {
-    wood: 45,   // 15 questions * 3
-    fire: 42,   // 14 questions * 3
-    earth: 48,  // 16 questions * 3
-    metal: 51,  // 17 questions * 3
-    water: 51   // 17 questions * 3
+    wood: 69,          // 23 questions * 3
+    fire: 42,          // 14 questions * 3
+    earth: 63,         // 21 questions * 3
+    metal: 66,         // 22 questions * 3
+    water: 48,         // 16 questions * 3
+    endocrineUnder: 99, // 33 questions * 3
+    endocrineOver: 78   // 26 questions * 3
 };
-
-// Threshold constants for imbalance detection
-const MINIMUM_THRESHOLD_PERCENTAGE = 15; // Minimum 15% to be considered elevated
-const SIGNIFICANT_DIFFERENCE_THRESHOLD = 25; // 25% difference to flag as notable pattern
-
-// Calculate normalized score as percentage of maximum
-function getNormalizedScore(elementKey, rawScore) {
-    const maxScore = maxScores[elementKey];
-    return maxScore > 0 ? (rawScore / maxScore) * 100 : 0;
-}
 
 // Update "Five Element Theory" interactions dynamically
 function updateFiveElementInteractions() {
     console.log("Updating Five Element interactions...");
 
-    // Get raw totals (extract numeric value before percentage)
+    // Get raw totals (extract numeric value before slash)
     const rawTotals = {
-        wood: parseInt(document.getElementById("imbalance-wood-total")?.textContent.split('(')[0] || "0", 10),
-        fire: parseInt(document.getElementById("imbalance-fire-total")?.textContent.split('(')[0] || "0", 10),
-        earth: parseInt(document.getElementById("imbalance-earth-total")?.textContent.split('(')[0] || "0", 10),
-        metal: parseInt(document.getElementById("imbalance-metal-total")?.textContent.split('(')[0] || "0", 10),
-        water: parseInt(document.getElementById("imbalance-water-total")?.textContent.split('(')[0] || "0", 10),
+        wood: parseInt(document.getElementById("imbalance-wood-total")?.textContent.split('/')[0]?.trim() || "0", 10),
+        fire: parseInt(document.getElementById("imbalance-fire-total")?.textContent.split('/')[0]?.trim() || "0", 10),
+        earth: parseInt(document.getElementById("imbalance-earth-total")?.textContent.split('/')[0]?.trim() || "0", 10),
+        metal: parseInt(document.getElementById("imbalance-metal-total")?.textContent.split('/')[0]?.trim() || "0", 10),
+        water: parseInt(document.getElementById("imbalance-water-total")?.textContent.split('/')[0]?.trim() || "0", 10),
+        endocrineUnder: parseInt(document.getElementById("imbalance-endocrineUnder-total")?.textContent.split('/')[0]?.trim() || "0", 10),
+        endocrineOver: parseInt(document.getElementById("imbalance-endocrineOver-total")?.textContent.split('/')[0]?.trim() || "0", 10),
     };
 
-    // Calculate normalized scores (percentage of max possible)
-    const normalizedScores = {
-        wood: getNormalizedScore('wood', rawTotals.wood),
-        fire: getNormalizedScore('fire', rawTotals.fire),
-        earth: getNormalizedScore('earth', rawTotals.earth),
-        metal: getNormalizedScore('metal', rawTotals.metal),
-        water: getNormalizedScore('water', rawTotals.water),
-    };
-
-    const summaryList = document.getElementById("five-element-summary");
-    summaryList.innerHTML = "";
-
-    // Calculate average and determine threshold using normalized scores
-    const normalizedSum = Object.values(normalizedScores).reduce((a, b) => a + b, 0);
-    const normalizedAverage = normalizedSum / 5;
-    const threshold = Math.max(MINIMUM_THRESHOLD_PERCENTAGE, normalizedAverage * 1.2); // At least 15% or 20% above average
-
-    const interactions = [];
-
-    // Find the highest and lowest normalized scores
-    const maxScore = Math.max(...Object.values(normalizedScores));
-    const minScore = Math.min(...Object.values(normalizedScores));
-    const maxElements = Object.keys(normalizedScores).filter(k => normalizedScores[k] === maxScore);
-    const minElements = Object.keys(normalizedScores).filter(k => normalizedScores[k] === minScore);
-
     console.log("Raw totals:", rawTotals);
-    console.log("Normalized scores (%):", normalizedScores);
-    console.log("Threshold:", threshold.toFixed(1) + "%");
+    console.log("Interactions calculation skipped - Pattern Analysis section removed.");
 
-    // Five Element Theory interactions based on generating and controlling cycles
-    
-    // CONTROLLING CYCLE IMBALANCES (Overacting/Insulting)
-    
-    // Wood overacting on Earth (Wood controls Earth)
-    if (normalizedScores.wood >= threshold && normalizedScores.earth >= threshold) {
-        interactions.push(`Section 1 and Section 3 imbalance: Liver stress may be impairing digestive function and weakening the Spleen system.`);
-    }
-
-    // Earth overacting on Water (Earth controls Water)
-    if (normalizedScores.earth >= threshold && normalizedScores.water >= threshold) {
-        interactions.push(`Section 3 and Section 5 imbalance: Digestive dampness may be affecting kidney function and fluid metabolism.`);
-    }
-
-    // Water overacting on Fire (Water controls Fire)
-    if (normalizedScores.water >= threshold && normalizedScores.fire >= threshold) {
-        interactions.push(`Section 5 and Section 2 imbalance: Kidney deficiency creating heart symptoms or Water failing to properly control Fire.`);
-    }
-
-    // Fire overacting on Metal (Fire controls Metal)
-    if (normalizedScores.fire >= threshold && normalizedScores.metal >= threshold) {
-        interactions.push(`Section 2 and Section 4 imbalance: Heart fire or emotional stress may be affecting lung function and immunity.`);
-    }
-
-    // Metal overacting on Wood (Metal controls Wood)
-    if (normalizedScores.metal >= threshold && normalizedScores.wood >= threshold) {
-        interactions.push(`Section 4 and Section 1 imbalance: Respiratory or grief issues may be suppressing liver function and emotional flow.`);
-    }
-
-    // GENERATING CYCLE IMBALANCES (Mother not nourishing Child)
-    
-    // Water not generating Wood properly
-    if (normalizedScores.water >= threshold && normalizedScores.wood >= threshold) {
-        interactions.push(`Section 5 and Section 1 deficiency: Kidney essence depletion affecting liver blood and hormone regulation.`);
-    }
-
-    // Wood not generating Fire properly
-    if (normalizedScores.wood >= threshold && normalizedScores.fire >= threshold) {
-        interactions.push(`Section 1 and Section 2 connection: Liver qi stagnation affecting heart spirit and creating heat symptoms.`);
-    }
-
-    // Fire not generating Earth properly
-    if (normalizedScores.fire >= threshold && normalizedScores.earth >= threshold) {
-        interactions.push(`Section 2 and Section 3 connection: Heart/circulation weakness may be affecting digestive function and mental clarity.`);
-    }
-
-    // Earth not generating Metal properly
-    if (normalizedScores.earth >= threshold && normalizedScores.metal >= threshold) {
-        interactions.push(`Section 3 and Section 4 imbalance: Digestive weakness affecting lung qi and immune function.`);
-    }
-
-    // Metal not generating Water properly
-    if (normalizedScores.metal >= threshold && normalizedScores.water >= threshold) {
-        interactions.push(`Section 4 and Section 5 deficiency: Lung qi weakness affecting kidney function and vital essence.`);
-    }
-
-    // SPECIAL PATTERNS - only show if scores are significantly different
-    
-    // Individual element analysis - only if there's a significant difference (>25% difference) AND they're different sections
-    if (maxScore - minScore >= SIGNIFICANT_DIFFERENCE_THRESHOLD && maxElements[0] !== minElements[0]) {
-        const maxSection = getSectionNumber(maxElements[0]);
-        const minSection = getSectionNumber(minElements[0]);
-        interactions.push(`Notable pattern: Section ${maxSection} score (${maxScore.toFixed(1)}%) is significantly higher than Section ${minSection} score (${minScore.toFixed(1)}%), suggesting a primary imbalance in that system.`);
-    }
-
-    // Specific element interpretations - only add these if the section is notably elevated
-    if (normalizedScores.wood >= threshold && normalizedScores.wood === maxScore) {
-        interactions.push(`Section 1 primary imbalance: Focus on stress management, liver detoxification, hormone balance, and ensuring smooth flow of energy.`);
-    }
-    if (normalizedScores.fire >= threshold && normalizedScores.fire === maxScore) {
-        interactions.push(`Section 2 primary imbalance: Attention needed for cardiovascular health, sleep quality, emotional regulation, and nutrient absorption.`);
-    }
-    if (normalizedScores.earth >= threshold && normalizedScores.earth === maxScore) {
-        interactions.push(`Section 3 primary imbalance: Strengthen digestive function, reduce overthinking, stabilize blood sugar, and nourish the center.`);
-    }
-    if (normalizedScores.metal >= threshold && normalizedScores.metal === maxScore) {
-        interactions.push(`Section 4 primary imbalance: Support respiratory health, strengthen immunity, improve elimination, and address grief/letting go.`);
-    }
-    if (normalizedScores.water >= threshold && normalizedScores.water === maxScore) {
-        interactions.push(`Section 5 primary imbalance: Restore vital essence, support adrenal/kidney function, address fear, and strengthen bones.`);
-    }
-
-    // Filter out duplicate interactions and prioritize
-    const uniqueInteractions = [...new Set(interactions)];
-    
-    // Prioritize: 
-    // 1. Specific dual-element patterns (most relevant)
-    // 2. Notable pattern differences
-    // 3. Single element interpretations
-    const prioritizedInteractions = uniqueInteractions.sort((a, b) => {
-        const aIsDual = a.includes('and Section');
-        const bIsDual = b.includes('and Section');
-        const aIsNotable = a.includes('Notable pattern');
-        const bIsNotable = b.includes('Notable pattern');
-        
-        if (aIsDual && !bIsDual) return -1;
-        if (!aIsDual && bIsDual) return 1;
-        if (aIsNotable && !bIsNotable) return -1;
-        if (!aIsNotable && bIsNotable) return 1;
-        return 0;
-    });
-
-    // Display top 5 most relevant interactions to avoid overwhelming
-    const displayInteractions = prioritizedInteractions.slice(0, 5);
-    
-    if (displayInteractions.length > 0) {
-        displayInteractions.forEach((interaction) => {
-            const li = document.createElement("li");
-            li.textContent = interaction;
-            summaryList.appendChild(li);
-        });
-    } else {
-        summaryList.innerHTML = "<li>No significant imbalances detected at this time. Scores are relatively balanced across all sections.</li>";
-    }
-
-    console.log("Interactions updated successfully.");
-    console.log("Raw totals:", rawTotals);
-    console.log("Normalized scores (%):", normalizedScores);
-    console.log("Threshold:", threshold.toFixed(1) + "%");
-    console.log("Displaying interactions:", displayInteractions);
+    // Generate practitioner recommendations after updating interactions
+    generatePractitionerRecommendations();
 }
 
 // Handle button clicks for symptoms
@@ -260,43 +652,56 @@ function handleButtonClick(event) {
 // Generate symptom sections from data
 function generateSymptomSections() {
     const container = document.getElementById("symptom-sections");
-    let symptomCounter = 0;
 
     Object.keys(symptomData).forEach(elementKey => {
         const element = symptomData[elementKey];
+        const sectionNum = getSectionNumber(elementKey);
+        const displayNames = getSectionDisplayName(elementKey);
+        let symptomCounter = 0;
+        
+        // Initialize subsection boundaries for this section
+        subsectionBoundaries[elementKey] = {};
         
         const section = document.createElement("div");
         section.className = "element-section";
-        section.style.marginBottom = "10px";
-        section.style.padding = "5px";
 
+        // Create header with proper format: "SECTION 1: WOOD ■" on left, "Liver & Gallbladder" on right
         const header = document.createElement("div");
         header.className = `element-header ${elementKey}-header`;
-        header.style.padding = "5px";
-        header.style.fontSize = "12px";
-        header.style.backgroundColor = element.color;
-        header.style.color = "white";
-        header.textContent = element.name; // Uses anonymized name
-
-        const description = document.createElement("div");
-        description.className = "element-description";
-        description.textContent = element.description;
-
+        
+        const titleSpan = document.createElement("span");
+        titleSpan.className = "section-title";
+        titleSpan.innerHTML = `SECTION ${sectionNum}: ${displayNames.main} &#9632;`; // &#9632; is a black square
+        
+        const subtitleSpan = document.createElement("span");
+        subtitleSpan.className = "section-subtitle";
+        subtitleSpan.textContent = displayNames.sub;
+        
+        header.appendChild(titleSpan);
+        header.appendChild(subtitleSpan);
         section.appendChild(header);
-        section.appendChild(description);
 
-        element.subsections.forEach(subsection => {
-            // Only add subsection header if it has content
-            if (subsection.title) {
-                const subsectionHeader = document.createElement("div");
-                subsectionHeader.className = "subsection-header";
-                subsectionHeader.textContent = subsection.title;
-                section.appendChild(subsectionHeader);
-            }
+        // Create a table for all symptoms in this section
+        const mainTable = document.createElement("table");
+        mainTable.className = "symptoms-table";
 
-            const table = document.createElement("table");
-            table.className = "symptoms-table";
+        element.subsections.forEach((subsection, subsectionIndex) => {
+            // Record the starting symptom index for this subsection
+            const subsectionStart = symptomCounter + 1;
+            
+            // Add subsection header row
+            const subsectionRow = document.createElement("tr");
+            subsectionRow.className = "subsection-row";
+            
+            const subsectionCell = document.createElement("td");
+            subsectionCell.colSpan = 2;
+            subsectionCell.className = "subsection-header-cell";
+            subsectionCell.textContent = subsection.title;
+            
+            subsectionRow.appendChild(subsectionCell);
+            mainTable.appendChild(subsectionRow);
 
+            // Add symptom rows for this subsection
             subsection.symptoms.forEach(symptom => {
                 symptomCounter++;
                 const symptomKey = `${elementKey}_${symptomCounter}`;
@@ -333,75 +738,46 @@ function generateSymptomSections() {
 
                 row.appendChild(nameCell);
                 row.appendChild(scoreCell);
-                table.appendChild(row);
+                mainTable.appendChild(row);
             });
-
-            // Add total row
-            const totalRow = document.createElement("tr");
-            totalRow.className = "total-row";
             
-            const totalLabelCell = document.createElement("td");
-            totalLabelCell.textContent = `${element.name.toUpperCase()} TOTAL:`;
+            // Record the ending symptom index and max score for this subsection
+            const subsectionEnd = symptomCounter;
+            const subsectionMaxScore = subsection.symptoms.length * 3;
             
-            const totalValueCell = document.createElement("td");
-            totalValueCell.className = "symptom-score";
-            
-            const totalInput = document.createElement("input");
-            totalInput.type = "number";
-            totalInput.name = `${elementKey}_total`;
-            totalInput.min = "0";
-            totalInput.readOnly = true;
-            totalInput.style.background = "#f0f0f0";
-            totalInput.value = "0";
-            
-            totalValueCell.appendChild(totalInput);
-            totalRow.appendChild(totalLabelCell);
-            totalRow.appendChild(totalValueCell);
-            
-            table.appendChild(totalRow);
-            section.appendChild(table);
+            // Store with the subsection title as the key
+            subsectionBoundaries[elementKey][subsection.title] = {
+                start: subsectionStart,
+                end: subsectionEnd,
+                maxScore: subsectionMaxScore
+            };
         });
 
-        container.appendChild(section);
+        section.appendChild(mainTable);
+
+        // Add total row
+        const totalRow = document.createElement("div");
+        totalRow.className = "total-row";
         
-        // Reset counter for each element
-        symptomCounter = 0;
+        const totalLabel = document.createElement("span");
+        totalLabel.textContent = `SECTION ${sectionNum} TOTAL:`;
+        
+        const totalValueContainer = document.createElement("span");
+        const totalInput = document.createElement("input");
+        totalInput.type = "text";
+        totalInput.name = `${elementKey}_total`;
+        totalInput.readOnly = true;
+        totalInput.value = `______ / ${maxScores[elementKey]}`;
+        
+        totalValueContainer.appendChild(totalInput);
+        totalRow.appendChild(totalLabel);
+        totalRow.appendChild(totalValueContainer);
+        section.appendChild(totalRow);
+
+        container.appendChild(section);
     });
 
-    // Add the key at the bottom
-    generateSectionKey();
-}
-
-// Generate the section key at the bottom
-function generateSectionKey() {
-    const container = document.getElementById("symptom-sections");
-    
-    const keySection = document.createElement("div");
-    keySection.className = "imbalance-section";
-    keySection.style.marginTop = "30px";
-    keySection.style.pageBreakBefore = "always";
-
-    const keyHeader = document.createElement("h3");
-    keyHeader.style.fontSize = "14px";
-    keyHeader.style.marginBottom = "10px";
-    keyHeader.style.color = "#2c5f2d";
-    keyHeader.textContent = "Assessment Section Key (For Practitioner Use)";
-
-    keySection.appendChild(keyHeader);
-
-    const keyList = document.createElement("div");
-    keyList.style.fontSize = "11px";
-    keyList.style.lineHeight = "1.8";
-
-    Object.keys(sectionKey).forEach(section => {
-        const keyItem = document.createElement("p");
-        keyItem.style.marginBottom = "8px";
-        keyItem.innerHTML = `<strong>${section}:</strong> ${sectionKey[section]}`;
-        keyList.appendChild(keyItem);
-    });
-
-    keySection.appendChild(keyList);
-    container.appendChild(keySection);
+    console.log("Subsection boundaries:", subsectionBoundaries);
 }
 
 // Initialize on page load

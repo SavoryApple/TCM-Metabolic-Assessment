@@ -3,107 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCM Metabolic Assessment - 5 Element Theory</title>
+    <title>5 Element Health Assessment</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<!-- PAGE 1 HEADER -->
-<div class="header" style="text-align: center; margin-bottom: 10px;">
-    <h1 style="font-size: 14px; color: #2c5f2d; margin: 0;">Metabolic Assessment Questionnaire</h1>
-    <p style="font-size: 10px; color: #555; margin: 5px 0;">Comprehensive Symptom Evaluation Form</p>
+<!-- HEADER -->
+<div class="header">
+    <h1>5 Element Health Assessment</h1>
+    <p class="subtitle">Comprehensive Symptom Evaluation Form</p>
+    <p class="clinic-info">Marc Pierson Ryan, LAc • Yo San University Teaching Clinic</p>
 </div>
 
 <!-- PATIENT INFO SECTION -->
-<div class="patient-info" style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 10px; font-size: 10px;">
-    <div style="font-size: 10px;">
-        <label style="display: block; font-weight: bold; margin-bottom: 3px;">Patient Name:</label>
-        <input type="text" name="patient_name" style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 3px;">
+<div class="patient-info-section">
+    <div class="patient-name-row">
+        <label>Patient Name:</label>
+        <input type="text" name="patient_name" class="patient-name-input" placeholder="Enter patient name">
     </div>
-    <div style="font-size: 10px;">
-        <label style="display: block; font-weight: bold; margin-bottom: 3px;">Date:</label>
-        <input type="date" name="date" style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 3px;">
+    <div class="patient-details-row">
+        <div class="info-group">
+            <label>Age:</label>
+            <input type="text" name="age" class="small-input" placeholder="">
+        </div>
+        <div class="info-group">
+            <label>Sex:</label>
+            <input type="text" name="sex" class="small-input" placeholder="">
+        </div>
+        <div class="info-group">
+            <label>Date:</label>
+            <input type="date" name="date" class="date-input">
+        </div>
     </div>
-    <div style="font-size: 10px;">
-        <label style="display: block; font-weight: bold; margin-bottom: 3px;">Age:</label>
-        <input type="text" name="age" style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 3px;">
-    </div>
-    <div style="font-size: 10px;">
-        <label style="display: block; font-weight: bold; margin-bottom: 3px;">Sex:</label>
-        <input type="text" name="sex" style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 3px;">
-    </div>
-    <div style="font-size: 10px;">
-        <label style="display: block; font-weight: bold; margin-bottom: 3px;">Patient Email:</label>
-        <input type="text" name="patient_email" style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 3px;">
-    </div>
-    <div style="font-size: 10px;">
-        <label style="display: block; font-weight: bold; margin-bottom: 3px;">Practitioner:</label>
-        <input type="text" name="practitioner" style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 3px;">
+</div>
+
+<!-- TOP 5 HEALTH CONCERNS -->
+<div class="health-concerns-section">
+    <p class="concerns-title">Please list your top 5 health concerns (in order of importance):</p>
+    <div class="concerns-list">
+        <div class="concern-item">
+            <span class="concern-number">1.</span>
+            <input type="text" name="concern_1" placeholder="">
+        </div>
+        <div class="concern-item">
+            <span class="concern-number">2.</span>
+            <input type="text" name="concern_2" placeholder="">
+        </div>
+        <div class="concern-item">
+            <span class="concern-number">3.</span>
+            <input type="text" name="concern_3" placeholder="">
+        </div>
+        <div class="concern-item">
+            <span class="concern-number">4.</span>
+            <input type="text" name="concern_4" placeholder="">
+        </div>
+        <div class="concern-item">
+            <span class="concern-number">5.</span>
+            <input type="text" name="concern_5" placeholder="">
+        </div>
     </div>
 </div>
 
 <!-- SCORING GUIDE -->
-<div class="scoring-guide" style="background: #e8f4e8; padding: 5px; margin-bottom: 10px; border-left: 4px solid #2c5f2d; font-size: 10px;">
-    <strong style="display: block; margin-bottom: 5px; color: #2c5f2d;">Scoring Instructions:</strong>
-    <p style="margin: 0;">
-        Rate each symptom on a scale of 0-3 based on frequency and severity:<br>
-        <strong>0</strong> = Never or almost never experience<br>
-        <strong>1</strong> = Occasionally experience, mild intensity (1-2 times per month)<br>
-        <strong>2</strong> = Frequently experience, moderate intensity (1-2 times per week)<br>
-        <strong>3</strong> = Constantly or almost constantly experience, severe intensity (daily or almost daily)
-    </p>
+<div class="scoring-guide">
+    <strong>How to Score:</strong> Rate each symptom based on your experience: 
+    <strong>0</strong> = Never • <strong>1</strong> = Occasionally, mild (1-2x/month) • 
+    <strong>2</strong> = Frequently, moderate (1-2x/week) • 
+    <strong>3</strong> = Constantly, severe (daily or almost daily)
 </div>
 
 <div id="symptom-sections"></div>
 
 <!-- RESULTS SECTION -->
-<div class="imbalance-section" style="margin-bottom: 10px; padding: 5px;">
-    <h3 style="font-size: 12px; margin-bottom: 5px; color: #2c5f2d;">Assessment Results & Patterns</h3>
-    <p style="font-size: 10px; margin-bottom: 10px; font-style: italic;">
-        Summary of findings based on your responses.
-    </p>
+<div class="results-section">
+    <h3>Assessment Results & Patterns</h3>
+    <p class="results-subtitle">Summary of findings based on your responses.</p>
 
-    <div class="imbalance-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 10px;">
-        <div class="imbalance-item" style="display: flex; align-items: center; gap: 5px;">
+    <div class="results-grid">
+        <div class="result-item">
             <span>Section 1 Total:</span>
-            <span id="imbalance-wood-total" style="font-weight: bold;">0</span>
+            <span id="imbalance-wood-total" class="result-value">0</span>
         </div>
-        <div class="imbalance-item" style="display: flex; align-items: center; gap: 5px;">
+        <div class="result-item">
             <span>Section 2 Total:</span>
-            <span id="imbalance-fire-total" style="font-weight: bold;">0</span>
+            <span id="imbalance-fire-total" class="result-value">0</span>
         </div>
-        <div class="imbalance-item" style="display: flex; align-items: center; gap: 5px;">
+        <div class="result-item">
             <span>Section 3 Total:</span>
-            <span id="imbalance-earth-total" style="font-weight: bold;">0</span>
+            <span id="imbalance-earth-total" class="result-value">0</span>
         </div>
-        <div class="imbalance-item" style="display: flex; align-items: center; gap: 5px;">
+        <div class="result-item">
             <span>Section 4 Total:</span>
-            <span id="imbalance-metal-total" style="font-weight: bold;">0</span>
+            <span id="imbalance-metal-total" class="result-value">0</span>
         </div>
-        <div class="imbalance-item" style="display: flex; align-items: center; gap: 5px;">
+        <div class="result-item">
             <span>Section 5 Total:</span>
-            <span id="imbalance-water-total" style="font-weight: bold;">0</span>
+            <span id="imbalance-water-total" class="result-value">0</span>
         </div>
-    </div>
-
-    <div class="results-summary" style="margin-top: 10px;">
-        <h3 style="font-size: 12px; margin-bottom: 5px; color: #2c5f2d;">Pattern Analysis</h3>
-        <ul id="five-element-summary" style="font-size: 10px; line-height: 1.4; padding-left: 15px;">
-            <!-- Interaction results will populate here -->
-        </ul>
-    </div>
-
-    <div class="notes-section" style="margin-top: 10px; font-size: 10px;">
-        <label style="font-weight: bold; margin-bottom: 3px;">Clinical Notes & Treatment Recommendations:</label>
-        <textarea name="clinical_notes" placeholder="Discuss patterns and treatment strategies..." style="width: 100%; height: 50px; padding: 5px; border: 1px solid #ccc; border-radius: 3px; resize: vertical;"></textarea>
+        <div class="result-item">
+            <span>Section 6 Total:</span>
+            <span id="imbalance-endocrineUnder-total" class="result-value">0</span>
+        </div>
+        <div class="result-item">
+            <span>Section 7 Total:</span>
+            <span id="imbalance-endocrineOver-total" class="result-value">0</span>
+        </div>
     </div>
 </div>
 
+<!-- PRACTITIONER RECOMMENDATIONS SECTION -->
+<div id="practitioner-recommendations" class="practitioner-recommendations">
+    <!-- Diagnostic recommendations will be generated here -->
+</div>
+
 <!-- Print Button -->
-<button class="print-button" onclick="printDocument()" style="margin-top: 10px; padding: 8px 12px; background-color: #4caf50; border: none; border-radius: 4px; font-size: 12px; color: white; cursor: pointer;">
+<button class="print-button" onclick="printDocument()">
     Print Assessment
 </button>
 
+<!-- Load Scripts -->
 <script src="data/symptoms.js"></script>
+<script src="data/diagnostic-logic.js"></script>
 <script src="js/calculations.js"></script>
 </body>
 </html>

@@ -1,199 +1,228 @@
-@media print {
-    /* General Settings */
-    body {
-        margin: 0.1in;
-        padding: 0;
-        font-size: 10px;
-        line-height: 1.1;
-    }
-
-    .header {
-        text-align: center;
-        margin-bottom: 5px;
-        font-size: 12px;
-        border: none;
-    }
-
-    h1, h3 {
-        font-size: 14px;
-    }
-
-    .patient-info, .scoring-guide, .element-section, .imbalance-section {
-        margin: 0;
-        padding: 5px;
-        border: none;
-        background: none;
-    }
-
-    .element-section {
-        page-break-inside: avoid;
-        page-break-after: auto;
-        margin-bottom: 10px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    tr, td {
-        padding: 2px;
-        font-size: 10px;
-    }
-
-    td.symptom-name {
-        width: 60%;
-    }
-
-    td.symptom-score {
-        width: 40%;
-        text-align: center;
-    }
-
-    .page-break {
-        page-break-after: always;
-    }
-
-    .print-button, .footer {
-        display: none;
-    }
-
-    .element-section {
-        height: auto;
-        overflow: hidden;
-    }
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.4;
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.6;
     max-width: 8.5in;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
+    color: #000;
 }
 
+/* Header Styles */
 .header {
     text-align: center;
     margin-bottom: 20px;
-    border-bottom: 3px solid #2c5f2d;
-    padding-bottom: 15px;
+    border-bottom: 3px solid #000;
+    padding-bottom: 10px;
 }
 
 .header h1 {
-    margin: 0;
-    color: #2c5f2d;
     font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #000;
 }
 
-.header p {
-    margin: 5px 0;
-    color: #555;
+.subtitle {
+    font-size: 14px;
+    font-style: italic;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.clinic-info {
+    font-size: 11px;
+    color: #888;
+}
+
+/* Patient Info Section */
+.patient-info-section {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 15px;
+}
+
+.patient-name-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.patient-name-row label {
+    font-weight: bold;
+    margin-right: 10px;
+    min-width: 120px;
     font-size: 12px;
 }
 
-.print-button {
-    margin: 20px 0;
-    padding: 10px 15px;
-    background-color: #4caf50;
+.patient-name-input {
+    flex: 1;
     border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    font-size: 14px;
+    border-bottom: 1px solid #000;
+    padding: 4px 5px;
+    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: transparent;
+}
+
+.patient-name-input:focus {
+    outline: none;
+    border-bottom: 2px solid #4a7c59;
+}
+
+.patient-details-row {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.info-group {
+    display: flex;
+    align-items: center;
+}
+
+.info-group label {
     font-weight: bold;
-    display: block;
+    margin-right: 10px;
+    font-size: 12px;
 }
 
-.print-button:hover {
-    background-color: #43a047;
+.small-input {
+    width: 100px;
+    border: none;
+    border-bottom: 1px solid #000;
+    padding: 4px 5px;
+    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: transparent;
 }
 
-.button-group button {
-    padding: 5px 10px;
-    margin-right: 5px;
-    border: 1px solid #ddd;
-    background-color: #f7f7f7;
-    cursor: pointer;
-    border-radius: 4px;
+.small-input:focus {
+    outline: none;
+    border-bottom: 2px solid #4a7c59;
 }
 
-.button-group button.active {
-    background-color: #4caf50;
-    color: white;
-    border-color: #4caf50;
+.date-input {
+    width: 150px;
+    border: none;
+    border-bottom: 1px solid #000;
+    padding: 4px 5px;
+    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: transparent;
 }
 
-.patient-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+.date-input:focus {
+    outline: none;
+    border-bottom: 2px solid #4a7c59;
+}
+
+/* Health Concerns Section */
+.health-concerns-section {
     margin-bottom: 20px;
-    background: white;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.patient-info label {
-    display: block;
+.concerns-title {
     font-weight: bold;
-    margin-bottom: 3px;
-    font-size: 11px;
-    color: #333;
+    margin-bottom: 10px;
+    font-size: 12px;
 }
 
-.patient-info input {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 11px;
+.concerns-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
+.concern-item {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+.concern-number {
+    min-width: 20px;
+    font-weight: bold;
+}
+
+.concern-item input {
+    flex: 1;
+    border: none;
+    border-bottom: 1px solid #000;
+    margin-left: 10px;
+    padding: 4px 5px;
+    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: transparent;
+}
+
+.concern-item input:focus {
+    outline: none;
+    border-bottom: 2px solid #4a7c59;
+}
+
+/* Scoring Guide */
 .scoring-guide {
-    background: #e8f4e8;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-left: 4px solid #2c5f2d;
-    font-size: 10px;
-}
-
-.scoring-guide strong {
-    display: block;
-    margin-bottom: 5px;
-    color: #2c5f2d;
-}
-
-.element-section {
+    background: #f0f0f0;
+    border: 1px solid #999;
+    padding: 12px 15px;
     margin-bottom: 20px;
-    background: white;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    overflow: hidden;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* Element Section Styles */
+.element-section {
+    margin-bottom: 30px;
+    page-break-inside: avoid;
+    border: 1px solid #ccc;
 }
 
 .element-header {
-    padding: 10px 15px;
+    background-color: #4a7c59;
     color: white;
+    padding: 10px 15px;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.wood-header { background: #4a7c59; }
-.fire-header { background: #d64545; }
-.earth-header { background: #c49b44; }
-.metal-header { background: #9a9a9a; }
-.water-header { background: #3b5998; }
+.element-header .section-title {
+    font-weight: bold;
+}
+
+.element-header .section-subtitle {
+    font-style: italic;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.wood-header { background: #4a6b4a; }
+.fire-header { background: #a85050; }
+.earth-header { background: #b8944a; }
+.metal-header { background: #606060; }
+.water-header { background: #4a5f8a; }
+.endocrineUnder-header { background: #5d4777; }
+.endocrineOver-header { background: #a0522d; }
 
 .element-description {
-    padding: 10px 15px;
-    background: #f7f7f7;
-    font-size: 10px;
+    padding: 8px 15px;
+    background: #f9f9f9;
+    font-size: 11px;
     font-style: italic;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #ddd;
 }
 
+/* Symptoms Table */
 .symptoms-table {
     width: 100%;
     border-collapse: collapse;
@@ -203,115 +232,688 @@ body {
     border-bottom: 1px solid #e0e0e0;
 }
 
-.symptoms-table tr:last-child {
-    border-bottom: none;
-}
-
 .symptoms-table td {
     padding: 8px 15px;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .symptom-name {
-    width: 75%;
+    width: 70%;
 }
 
 .symptom-score {
-    width: 25%;
-    text-align: center;
+    width: 30%;
+    text-align: right;
 }
 
-.symptom-score input {
-    width: 40px;
-    padding: 4px;
-    text-align: center;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 11px;
+/* Subsection Header - Default */
+.subsection-row {
+    background-color: #e8f4e8;
 }
 
-.total-row {
-    background: #f0f0f0;
+.subsection-header-cell {
+    padding: 6px 15px !important;
     font-weight: bold;
+    font-size: 12px;
+    color: #000;
+    background-color: #e8f4e8;
+    text-align: left;
 }
 
-.total-row td {
+/* Subsection colors for Wood section */
+.wood-header ~ table .subsection-row {
+    background-color: #e8f4e8;
+}
+
+.wood-header ~ table .subsection-header-cell {
+    background-color: #e8f4e8;
+}
+
+/* Subsection colors for Fire section */
+.fire-header ~ table .subsection-row {
+    background-color: #f5e6e6;
+}
+
+.fire-header ~ table .subsection-header-cell {
+    background-color: #f5e6e6;
+}
+
+/* Subsection colors for Earth section */
+.earth-header ~ table .subsection-row {
+    background-color: #f5f0e6;
+}
+
+.earth-header ~ table .subsection-header-cell {
+    background-color: #f5f0e6;
+}
+
+/* Subsection colors for Metal section */
+.metal-header ~ table .subsection-row {
+    background-color: #e6e6e6;
+}
+
+.metal-header ~ table .subsection-header-cell {
+    background-color: #e6e6e6;
+}
+
+/* Subsection colors for Water section */
+.water-header ~ table .subsection-row {
+    background-color: #e6ecf5;
+}
+
+.water-header ~ table .subsection-header-cell {
+    background-color: #e6ecf5;
+}
+
+/* Subsection colors for Endocrine Underactivity section */
+.endocrineUnder-header ~ table .subsection-row {
+    background-color: #ebe6f0;
+}
+
+.endocrineUnder-header ~ table .subsection-header-cell {
+    background-color: #ebe6f0;
+}
+
+/* Subsection colors for Endocrine Overactivity section */
+.endocrineOver-header ~ table .subsection-row {
+    background-color: #f5ebe6;
+}
+
+.endocrineOver-header ~ table .subsection-header-cell {
+    background-color: #f5ebe6;
+}
+
+/* Button Group */
+.button-group {
+    display: inline-flex;
+    gap: 5px;
+}
+
+.button-group button {
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 12px;
+    min-width: 30px;
+    transition: all 0.2s ease;
+}
+
+.button-group button.active {
+    background-color: #4caf50;
+    color: white;
+    border-color: #4caf50;
+}
+
+.button-group button:hover {
+    background-color: #f0f0f0;
+}
+
+.button-group button.active:hover {
+    background-color: #45a049;
+}
+
+/* Total Row */
+.total-row {
+    display: flex;
+    justify-content: space-between;
     padding: 10px 15px;
+    background-color: #f0f0f0;
+    font-weight: bold;
+    border-top: 2px solid #000;
+    font-size: 12px;
 }
 
-.imbalance-section {
-    margin-top: 20px;
+.total-row input {
+    background: transparent;
+    border: none;
+    font-weight: bold;
+    text-align: right;
+    width: 150px;
+    font-size: 12px;
+}
+
+/* Results Section */
+.results-section {
+    margin-top: 30px;
     background: white;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 20px;
+    border: 1px solid #ccc;
 }
 
-.imbalance-section h3 {
-    margin-top: 0;
+.results-section h3 {
     color: #2c5f2d;
-    font-size: 14px;
+    font-size: 16px;
     border-bottom: 2px solid #2c5f2d;
     padding-bottom: 5px;
+    margin-bottom: 10px;
 }
 
-.imbalance-grid {
+.results-subtitle {
+    font-size: 11px;
+    font-style: italic;
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.results-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
-.imbalance-item {
+.result-item {
     display: flex;
-    align-items: center;
-    font-size: 11px;
+    justify-content: space-between;
+    padding: 5px;
+    font-size: 12px;
 }
 
-.imbalance-item input[type="checkbox"] {
-    margin-right: 8px;
+.result-value {
+    font-weight: bold;
+}
+
+.pattern-analysis {
+    margin-top: 20px;
+}
+
+.pattern-analysis h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.pattern-analysis ul {
+    padding-left: 20px;
+    font-size: 11px;
+    line-height: 1.6;
 }
 
 .notes-section {
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 .notes-section label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .notes-section textarea {
     width: 100%;
-    height: 60px;
+    height: 100px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 3px;
     font-size: 11px;
-    font-family: Arial, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     resize: vertical;
+    background-color: #fff;
 }
 
-.page-break {
-    margin: 30px 0;
+.notes-section textarea:focus {
+    outline: none;
+    border-color: #4a7c59;
 }
 
-.footer {
-    text-align: center;
-    margin-top: 20px;
-    padding-top: 10px;
-    border-top: 2px solid #2c5f2d;
-    font-size: 9px;
-    color: #666;
+/* Practitioner Recommendations Section */
+.practitioner-recommendations {
+    margin-top: 30px;
+    background: #f9f9f9;
+    padding: 20px;
+    border: 2px solid #2c5f2d;
+    border-radius: 5px;
 }
 
-.subsection-header {
-    background: #e8f4e8;
-    padding: 8px 15px;
-    font-weight: bold;
-    font-size: 12px;
+.practitioner-recommendations h3 {
     color: #2c5f2d;
-    border-top: 2px solid #2c5f2d;
+    font-size: 18px;
+    border-bottom: 3px solid #2c5f2d;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.practitioner-recommendations h4 {
+    color: #2c5f2d;
+    font-size: 14px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.practitioner-recommendations h5 {
+    color: #4a6b4a;
+    font-size: 13px;
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+
+/* Subsection Analysis */
+.subsection-analysis {
+    margin-bottom: 25px;
+}
+
+.section-analysis {
+    margin-bottom: 20px;
+}
+
+.analysis-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 11px;
+}
+
+.analysis-table thead {
+    background-color: #2c5f2d;
+    color: white;
+}
+
+.analysis-table th {
+    padding: 8px;
+    text-align: left;
+    font-weight: bold;
+    border: 1px solid #ddd;
+}
+
+.analysis-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.analysis-table tbody tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+.analysis-table tbody tr:hover {
+    background-color: #e8f4e8;
+}
+
+/* Category color coding */
+.category-mild {
+    background-color: #fff3cd !important;
+}
+
+.category-moderate {
+    background-color: #ffd89b !important;
+}
+
+.category-severe {
+    background-color: #ffb3b3 !important;
+}
+
+/* TCM Patterns */
+.tcm-patterns {
+    margin-bottom: 25px;
+}
+
+.tcm-patterns ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.tcm-patterns li {
+    padding: 8px;
+    margin-bottom: 5px;
+    background-color: #e8f4e8;
+    border-left: 4px solid #4a6b4a;
+    font-size: 11px;
+}
+
+/* Endocrine Square */
+.endocrine-square {
+    margin-bottom: 25px;
+}
+
+.square-finding {
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: #ebe6f0;
+    border-left: 4px solid #5d4777;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.square-finding strong {
+    color: #5d4777;
+    font-size: 12px;
+}
+
+/* Clinical Patterns */
+.clinical-patterns {
+    margin-bottom: 25px;
+}
+
+.clinical-pattern {
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: #f5f0e6;
+    border-left: 4px solid #b8944a;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.clinical-pattern strong {
+    color: #b8944a;
+    font-size: 12px;
+}
+
+/* Recommended Tests */
+.recommended-tests {
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.recommended-tests ul {
+    list-style-type: disc;
+    padding-left: 25px;
+    margin-top: 10px;
+}
+
+.recommended-tests li {
+    padding: 5px 0;
+    font-size: 11px;
+}
+
+/* Subsection Test Groups */
+.subsection-test-group {
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.subsection-test-header {
+    color: #2c5f2d;
+    font-size: 13px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #4a7c59;
+}
+
+.key-labs-section {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #e8f4e8;
+    border-left: 3px solid #4a7c59;
+    border-radius: 3px;
+}
+
+.test-panels-section {
+    padding: 10px;
+    background-color: white;
+    border-left: 3px solid #2c5f2d;
+    border-radius: 3px;
+}
+
+.labs-label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #2c5f2d;
+    margin-bottom: 5px;
+}
+
+.labs-content {
+    font-size: 11px;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.subsection-subtotal {
+    font-size: 11px;
+    text-align: right;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid #ddd;
+    color: #2c5f2d;
+}
+
+/* Test list with prices */
+.test-list-with-prices {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+}
+
+.test-list-with-prices li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    margin-bottom: 5px;
+    background-color: #f9f9f9;
+    border-left: 3px solid #4a7c59;
+    font-size: 11px;
+    transition: background-color 0.2s ease;
+}
+
+.test-list-with-prices li:hover {
+    background-color: #e8f4e8;
+}
+
+.test-name {
+    flex: 1;
+    font-weight: normal;
+    color: #333;
+}
+
+.test-price {
+    font-weight: bold;
+    color: #2c5f2d;
+    margin-left: 15px;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.total-cost {
+    margin-top: 15px;
+    padding: 12px;
+    background-color: #e8f4e8;
+    border: 2px solid #2c5f2d;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+    color: #2c5f2d;
+}
+
+/* Print Button */
+.print-button {
+    margin: 20px auto;
+    display: block;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.print-button:hover {
+    background-color: #45a049;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        margin: 0.25in;
+        padding: 0;
+        font-size: 10pt;
+    }
+
+    .print-button {
+        display: none;
+    }
+
+    .element-section {
+        page-break-inside: avoid;
+    }
+
+    .subsection-row {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .subsection-header-cell {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .element-header {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Preserve subsection colors when printing */
+    .wood-header ~ table .subsection-row,
+    .wood-header ~ table .subsection-header-cell {
+        background-color: #e8f4e8 !important;
+    }
+
+    .fire-header ~ table .subsection-row,
+    .fire-header ~ table .subsection-header-cell {
+        background-color: #f5e6e6 !important;
+    }
+
+    .earth-header ~ table .subsection-row,
+    .earth-header ~ table .subsection-header-cell {
+        background-color: #f5f0e6 !important;
+    }
+
+    .metal-header ~ table .subsection-row,
+    .metal-header ~ table .subsection-header-cell {
+        background-color: #e6e6e6 !important;
+    }
+
+    .water-header ~ table .subsection-row,
+    .water-header ~ table .subsection-header-cell {
+        background-color: #e6ecf5 !important;
+    }
+
+    .endocrineUnder-header ~ table .subsection-row,
+    .endocrineUnder-header ~ table .subsection-header-cell {
+        background-color: #ebe6f0 !important;
+    }
+
+    .endocrineOver-header ~ table .subsection-row,
+    .endocrineOver-header ~ table .subsection-header-cell {
+        background-color: #f5ebe6 !important;
+    }
+
+    /* Preserve practitioner recommendations styling */
+    .practitioner-recommendations {
+        page-break-before: always;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .analysis-table thead {
+        background-color: #2c5f2d !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .category-mild {
+        background-color: #fff3cd !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .category-moderate {
+        background-color: #ffd89b !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .category-severe {
+        background-color: #ffb3b3 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .square-finding {
+        background-color: #ebe6f0 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .clinical-pattern {
+        background-color: #f5f0e6 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .total-cost {
+        background-color: #e8f4e8 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .test-list-with-prices li {
+        background-color: #f9f9f9 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .key-labs-section {
+        background-color: #e8f4e8 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .test-panels-section {
+        background-color: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .subsection-test-group {
+        background-color: #f9f9f9 !important;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Print input values, not input boxes */
+    input, textarea {
+        border: none !important;
+        background: transparent !important;
+    }
+
+    .subsection-subtitle {
+    font-size: 10px;
+    font-weight: normal;
+    color: #666;
+    font-style: italic;
+}
+
+.subsection-status {
+    font-size: 11px;
+    font-weight: normal;
+    color: #2c5f2d;
+}
+
+.subsection-subtitle {
+    font-size: 10px;
+    font-weight: normal;
+    color: #666;
+    font-style: italic;
+}
+
+.subsection-status {
+    font-size: 11px;
+    font-weight: normal;
+    color: #2c5f2d;
+}
 }
