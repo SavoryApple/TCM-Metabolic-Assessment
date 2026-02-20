@@ -1,0 +1,164 @@
+/* Element Section Styles */
+.element-section {
+    margin-bottom: 30px;
+    page-break-inside: avoid;
+    border: 1px solid #ccc;
+}
+
+.element-header {
+    background-color: #4a7c59;
+    color: white;
+    padding: 10px 15px;
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.element-header .section-title {
+    font-weight: bold;
+}
+
+.element-header .section-subtitle {
+    font-style: italic;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.wood-header { background: #4a6b4a; }
+.fire-header { background: #a85050; }
+.earth-header { background: #b8944a; }
+.metal-header { background: #606060; }
+.water-header { background: #4a5f8a; }
+.endocrineUnder-header { background: #5d4777; }
+.endocrineOver-header { background: #a0522d; }
+
+.element-description {
+    padding: 8px 15px;
+    background: #f9f9f9;
+    font-size: 11px;
+    font-style: italic;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Symptoms Table */
+.symptoms-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.symptoms-table tr {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.symptoms-table td {
+    padding: 8px 15px;
+    font-size: 12px;
+}
+
+.symptom-name {
+    width: 70%;
+}
+
+.symptom-score {
+    width: 30%;
+    text-align: right;
+}
+
+/* Subsection Header - Default */
+.subsection-row {
+    background-color: #e8f4e8;
+}
+
+.subsection-header-cell {
+    padding: 6px 15px !important;
+    font-weight: bold;
+    font-size: 12px;
+    color: #000;
+    background-color: #e8f4e8;
+    text-align: left;
+}
+
+/* Subsection colors for Wood section */
+.wood-header ~ table .subsection-row {
+    background-color: #e8f4e8;
+}
+
+.wood-header ~ table .subsection-header-cell {
+    background-color: #e8f4e8;
+}
+
+/* Subsection colors for Fire section */
+.fire-header ~ table .subsection-row {
+    background-color: #f5e6e6;
+}
+
+.fire-header ~ table .subsection-header-cell {
+    background-color: #f5e6e6;
+}
+
+/* Subsection colors for Earth section */
+.earth-header ~ table .subsection-row {
+    background-color: #f5f0e6;
+}
+
+.earth-header ~ table .subsection-header-cell {
+    background-color: #f5f0e6;
+}
+
+/* Subsection colors for Metal section */
+.metal-header ~ table .subsection-row {
+    background-color: #e6e6e6;
+}
+
+.metal-header ~ table .subsection-header-cell {
+    background-color: #e6e6e6;
+}
+
+/* Subsection colors for Water section */
+.water-header ~ table .subsection-row {
+    background-color: #e6ecf5;
+}
+
+.water-header ~ table .subsection-header-cell {
+    background-color: #e6ecf5;
+}
+
+/* Subsection colors for Endocrine Underactivity section */
+.endocrineUnder-header ~ table .subsection-row {
+    background-color: #ebe6f0;
+}
+
+.endocrineUnder-header ~ table .subsection-header-cell {
+    background-color: #ebe6f0;
+}
+
+/* Subsection colors for Endocrine Overactivity section */
+.endocrineOver-header ~ table .subsection-row {
+    background-color: #f5ebe6;
+}
+
+.endocrineOver-header ~ table .subsection-header-cell {
+    background-color: #f5ebe6;
+}
+
+/* Total Row */
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    font-weight: bold;
+    border-top: 2px solid #000;
+    font-size: 12px;
+}
+
+.total-row input {
+    background: transparent;
+    border: none;
+    font-weight: bold;
+    text-align: right;
+    width: 150px;
+    font-size: 12px;
+}

@@ -1,0 +1,281 @@
+/* Reference Guide Specific Styles */
+.reference-guide-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.reference-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid #2c5f2d;
+}
+
+.reference-header h1 {
+    color: #2c5f2d;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.reference-subtitle {
+    color: #666;
+    font-size: 16px;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    padding: 10px 20px;
+    background-color: #2c5f2d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #234d24;
+}
+
+/* Reference Element Sections */
+.reference-element {
+    margin-bottom: 40px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.reference-element-title {
+    padding: 15px 20px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.wood-ref {
+    background-color: #4a6b4a;
+}
+
+.fire-ref {
+    background-color: #a85050;
+}
+
+.earth-ref {
+    background-color: #b8944a;
+}
+
+.metal-ref {
+    background-color: #606060;
+}
+
+.water-ref {
+    background-color: #4a5f8a;
+}
+
+.endocrine-under-ref {
+    background-color: #5d4777;
+}
+
+.endocrine-over-ref {
+    background-color: #a0522d;
+}
+
+/* Subsections */
+.reference-subsection {
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.reference-subsection:last-child {
+    border-bottom: none;
+}
+
+.reference-subsection h4 {
+    color: #2c5f2d;
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.reference-content {
+    display: grid;
+    gap: 15px;
+}
+
+.tcm-pattern {
+    background-color: #f0f8f0;
+    padding: 10px 15px;
+    border-left: 4px solid #4a6b4a;
+    border-radius: 4px;
+}
+
+.key-labs {
+    background-color: #f8f8f0;
+    padding: 10px 15px;
+    border-left: 4px solid #b8944a;
+    border-radius: 4px;
+}
+
+.recommended-tests {
+    background-color: #f0f0f8;
+    padding: 10px 15px;
+    border-left: 4px solid #4a5f8a;
+    border-radius: 4px;
+}
+
+.reference-content ul {
+    margin: 10px 0 0 20px;
+    padding: 0;
+}
+
+.reference-content li {
+    margin: 5px 0;
+    line-height: 1.6;
+}
+
+/* Pattern Combinations */
+.reference-patterns {
+    margin-top: 40px;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border: 2px solid #2c5f2d;
+    border-radius: 8px;
+}
+
+.reference-patterns h3 {
+    color: #2c5f2d;
+    font-size: 26px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid #2c5f2d;
+    padding-bottom: 10px;
+}
+
+.pattern-combo {
+    background-color: white;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-left: 5px solid #4a6b4a;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.pattern-combo h4 {
+    color: #2c5f2d;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.pattern-combo p {
+    margin: 5px 0;
+    line-height: 1.6;
+}
+
+/* Endocrine Square */
+.reference-endocrine-square {
+    margin-top: 40px;
+    padding: 30px;
+    background-color: #f5f0f8;
+    border: 2px solid #5d4777;
+    border-radius: 8px;
+}
+
+.reference-endocrine-square h3 {
+    color: #5d4777;
+    font-size: 26px;
+    margin-bottom: 15px;
+    text-align: center;
+    border-bottom: 2px solid #5d4777;
+    padding-bottom: 10px;
+}
+
+.square-intro {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.square-pattern {
+    background-color: white;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-left: 5px solid #5d4777;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.square-pattern h4 {
+    color: #5d4777;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.square-pattern p {
+    margin: 5px 0;
+    line-height: 1.6;
+}
+
+/* Test Catalog */
+.reference-test-catalog {
+    margin-top: 40px;
+    padding: 30px;
+    background-color: #fff8f0;
+    border: 2px solid #b8944a;
+    border-radius: 8px;
+}
+
+.reference-test-catalog h3 {
+    color: #b8944a;
+    font-size: 26px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid #b8944a;
+    padding-bottom: 10px;
+}
+
+.catalog-category {
+    background-color: white;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-left: 5px solid #b8944a;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.catalog-category h4 {
+    color: #b8944a;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.catalog-category ul {
+    margin: 10px 0 0 20px;
+    padding: 0;
+}
+
+.catalog-category li {
+    margin: 5px 0;
+    line-height: 1.6;
+}
+
+/* Print Styles for Reference Guide */
+@media print {
+    .back-button {
+        display: none;
+    }
+    
+    .reference-guide-page {
+        max-width: 100%;
+    }
+    
+    .reference-element {
+        page-break-inside: avoid;
+    }
+}

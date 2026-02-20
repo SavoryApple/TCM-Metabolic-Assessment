@@ -1,0 +1,78 @@
+/* Header Styles */
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #000;
+    padding-bottom: 10px;
+}
+
+.header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+.subtitle {
+    font-size: 14px;
+    font-style: italic;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.clinic-info {
+    font-size: 11px;
+    color: #888;
+}
+
+/* Patient Info Section */
+.patient-info-section {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 15px;
+}
+
+.patient-name-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.patient-name-row label {
+    font-weight: bold;
+    margin-right: 10px;
+    min-width: 120px;
+    font-size: 12px;
+}
+
+.patient-name-input {
+    flex: 1;
+    border: none;
+    border-bottom: 1px solid #000;
+    padding: 4px 5px;
+    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: transparent;
+}
+
+.patient-name-input:focus {
+    outline: none;
+    border-bottom: 2px solid #4a7c59;
+}
+
+.patient-details-row {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.info-group {
+    display: flex;
+    align-items: center;
+}
+
+.info-group label {
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: 12px;
+}

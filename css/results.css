@@ -1,0 +1,83 @@
+/* Results Section */
+.results-section {
+    margin-top: 30px;
+    background: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.results-section h3 {
+    color: #2c5f2d;
+    font-size: 16px;
+    border-bottom: 2px solid #2c5f2d;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.results-subtitle {
+    font-size: 11px;
+    font-style: italic;
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.result-value {
+    font-weight: bold;
+}
+
+.pattern-analysis {
+    margin-top: 20px;
+}
+
+.pattern-analysis h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.pattern-analysis ul {
+    padding-left: 20px;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.notes-section {
+    margin-top: 20px;
+}
+
+.notes-section label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.notes-section textarea {
+    width: 100%;
+    height: 100px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 11px;
+    font-family: 'Times New Roman', Times, serif;
+    resize: vertical;
+    background-color: #fff;
+}
+
+.notes-section textarea:focus {
+    outline: none;
+    border-color: #4a7c59;
+}

@@ -1,0 +1,65 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.6;
+    max-width: 8.5in;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    color: #000;
+}
+
+/* Print Section - positioned at top - SCREEN ONLY */
+@media screen {
+    .print-section {
+        margin-bottom: 20px;
+    }
+
+    .print-button,
+    .reference-button {
+        display: inline-block;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        margin-right: 10px;
+        margin-bottom: 8px;
+        vertical-align: top;
+    }
+
+    .print-button {
+        background-color: #4caf50;
+    }
+
+    .print-button:hover {
+        background-color: #45a049;
+    }
+
+    .reference-button {
+        background-color: #2c5f2d;
+    }
+
+    .reference-button:hover {
+        background-color: #234d24;
+    }
+
+    .print-instructions {
+        font-size: 12px;
+        color: #666;
+        font-style: italic;
+        margin: 0;
+        line-height: 1.4;
+        display: block;
+        clear: both;
+    }
+}

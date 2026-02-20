@@ -7,6 +7,19 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<!-- Save as PDF and Reference Guide Buttons at Top -->
+<div class="print-section">
+    <button class="print-button" onclick="window.print()">
+        Save as PDF
+    </button>
+    <button class="reference-button" onclick="window.location.href='reference-guide.html'">
+        View Master Reference Guide
+    </button>
+    <p class="print-instructions">
+        <strong>Tip:</strong> In the print dialog, select "Save as PDF" and uncheck "Headers and footers" for a clean document.
+    </p>
+</div>
+
 <!-- HEADER -->
 <div class="header">
     <h1>5 Element Health Assessment</h1>
@@ -73,6 +86,81 @@
 
 <div id="symptom-sections"></div>
 
+<!-- ASSESSMENT KEY (prints on page 4) -->
+<div class="assessment-key">
+    <h3>Assessment Key — Section & Subsection Meanings</h3>
+    
+    <div class="key-section">
+        <h4>SECTION 1: WOOD — Liver & Gallbladder</h4>
+        <ul>
+            <li><strong>1A:</strong> Liver Qi & Emotional Regulation [Stress / HPA / Detox]</li>
+            <li><strong>1B:</strong> Gallbladder & Bile Function [Biliary / Fat Digestion]</li>
+            <li><strong>1C:</strong> Detoxification & Hormonal Balance [Phase I/II Detox / Estrogen]</li>
+            <li><strong>1D:</strong> Liver-Endocrine Connection [Thyroid-Liver Axis]</li>
+        </ul>
+    </div>
+
+    <div class="key-section">
+        <h4>SECTION 2: FIRE — Heart & Small Intestine</h4>
+        <ul>
+            <li><strong>2A:</strong> Heart Qi & Shen (Spirit) [Cardiovascular / Nervous System]</li>
+            <li><strong>2B:</strong> Heart & Circulation Rhythm [Circadian / Central Rhythm]</li>
+            <li><strong>2C:</strong> Small Intestine & Absorption [Nutrient Absorption / Gut]</li>
+        </ul>
+    </div>
+
+    <div class="key-section">
+        <h4>SECTION 3: EARTH — Spleen & Stomach</h4>
+        <ul>
+            <li><strong>3A:</strong> Spleen & Stomach (Upper GI) [HCl / Gastric Integrity]</li>
+            <li><strong>3B:</strong> Pancreatic & Enzyme Function [Exocrine / Digestive Enzymes]</li>
+            <li><strong>3C:</strong> Spleen Qi & Transformation [Malabsorption / Poverty]</li>
+        </ul>
+    </div>
+
+    <div class="key-section">
+        <h4>SECTION 4: METAL — Lung & Large Intestine</h4>
+        <ul>
+            <li><strong>4A:</strong> Lung Qi, Wei Qi [Immunity / Respiratory]</li>
+            <li><strong>4B:</strong> Skin & External Expression [Dermatological / Inflammation]</li>
+            <li><strong>4C:</strong> Large Intestine & Elimination [Bowel / Microbiome]</li>
+            <li><strong>4D:</strong> Gut-Immune & Sensitivity [Gut/Lung / Leaky Gut]</li>
+            <li><strong>4E:</strong> Grief & Emotional Regulation [Letting Go / Loss]</li>
+        </ul>
+    </div>
+
+    <div class="key-section">
+        <h4>SECTION 5: WATER — Kidney & Urinary Bladder</h4>
+        <ul>
+            <li><strong>5A:</strong> Kidney Essence / Jing [Jing / Bone Health]</li>
+            <li><strong>5B:</strong> Urinary & Fluid Metabolism [Urinary / Kidney]</li>
+            <li><strong>5C:</strong> Kidney Emotional & Sensory [Fear / Hearing / Ear]</li>
+        </ul>
+    </div>
+
+    <div class="key-section">
+        <h4>SECTION 6: ENDOCRINE UNDERACTIVITY</h4>
+        <p class="key-subtitle">Thyroid • Adrenal • Blood Sugar • Reproductive</p>
+        <ul>
+            <li><strong>6A:</strong> Hypothyroid Pattern [Thyroid Hypofunction]</li>
+            <li><strong>6B:</strong> HPA — Adrenal Hypofunction [Adrenal Fatigue]</li>
+            <li><strong>6C:</strong> HYP — Hypoglycemia Pattern [Reactive Hypoglycemia]</li>
+            <li><strong>6D:</strong> HPO — Gonadal Insufficiency [Reproductive Hypofunction]</li>
+        </ul>
+    </div>
+
+    <div class="key-section">
+        <h4>SECTION 7: ENDOCRINE OVERACTIVITY</h4>
+        <p class="key-subtitle">Thyroid • Adrenal • Blood Sugar • Reproductive</p>
+        <ul>
+            <li><strong>7A:</strong> HPT — Hyperthyroid Pattern [Thyroid Hyperfunction]</li>
+            <li><strong>7B:</strong> HPA — Adrenal Hyperfunction [High Stress / Cortisol]</li>
+            <li><strong>7C:</strong> HPF — Insulin Resistance [Metabolic Syndrome]</li>
+            <li><strong>7D:</strong> HPO — Estrogen Dominance / Andropause [Reproductive Excess]</li>
+        </ul>
+    </div>
+</div>
+
 <!-- RESULTS SECTION -->
 <div class="results-section">
     <h3>Assessment Results & Patterns</h3>
@@ -115,14 +203,16 @@
     <!-- Diagnostic recommendations will be generated here -->
 </div>
 
-<!-- Print Button -->
-<button class="print-button" onclick="printDocument()">
-    Print Assessment
-</button>
-
 <!-- Load Scripts -->
 <script src="data/symptoms.js"></script>
 <script src="data/diagnostic-logic.js"></script>
+
+<!-- Load calculation modules -->
+<script src="js/utils.js"></script>
+<script src="js/scoring.js"></script>
+<script src="js/recommendations.js"></script>
+<script src="js/display.js"></script>
+<script src="js/ui-handlers.js"></script>
 <script src="js/calculations.js"></script>
 </body>
 </html>

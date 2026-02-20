@@ -1,0 +1,115 @@
+/* Form Input Styles */
+.small-input {
+    width: 100px;
+    border: none;
+    border-bottom: 1px solid #000;
+    padding: 4px 5px;
+    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: transparent;
+}
+
+.small-input:focus {
+    outline: none;
+    border-bottom: 2px solid #4a7c59;
+}
+
+.date-input {
+    width: 150px;
+    border: none;
+    border-bottom: 1px solid #000;
+    padding: 4px 5px;
+    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: transparent;
+}
+
+.date-input:focus {
+    outline: none;
+    border-bottom: 2px solid #4a7c59;
+}
+
+/* Health Concerns Section */
+.health-concerns-section {
+    margin-bottom: 20px;
+}
+
+.concerns-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.concerns-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.concern-item {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+.concern-number {
+    min-width: 20px;
+    font-weight: bold;
+}
+
+.concern-item input {
+    flex: 1;
+    border: none;
+    border-bottom: 1px solid #000;
+    margin-left: 10px;
+    padding: 4px 5px;
+    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: transparent;
+}
+
+.concern-item input:focus {
+    outline: none;
+    border-bottom: 2px solid #4a7c59;
+}
+
+/* Scoring Guide */
+.scoring-guide {
+    background: #f0f0f0;
+    border: 1px solid #999;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* Button Group */
+.button-group {
+    display: inline-flex;
+    gap: 5px;
+}
+
+.button-group button {
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 12px;
+    min-width: 30px;
+    transition: all 0.2s ease;
+}
+
+.button-group button.active {
+    background-color: #4caf50;
+    color: white;
+    border-color: #4caf50;
+}
+
+.button-group button:hover {
+    background-color: #f0f0f0;
+}
+
+.button-group button.active:hover {
+    background-color: #45a049;
+}

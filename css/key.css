@@ -1,0 +1,53 @@
+/* Assessment Key Section */
+.assessment-key {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 2px solid #2c5f2d;
+    border-radius: 5px;
+}
+
+.assessment-key h3 {
+    color: #2c5f2d;
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-align: center;
+    border-bottom: 2px solid #2c5f2d;
+    padding-bottom: 8px;
+}
+
+.key-section {
+    margin-bottom: 12px;
+}
+
+.key-section h4 {
+    color: #2c5f2d;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.key-subtitle {
+    font-size: 10px;
+    font-style: italic;
+    color: #666;
+    margin: -3px 0 5px 0;
+}
+
+.key-section ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.key-section li {
+    font-size: 10px;
+    line-height: 1.4;
+    padding: 2px 0;
+    margin-left: 15px;
+}
+
+.key-section li strong {
+    color: #2c5f2d;
+    font-weight: bold;
+}

@@ -1,0 +1,525 @@
+/* Print Styles */
+@media print {
+    body {
+        margin: 0.5in 0.4in;
+        padding: 0;
+        font-size: 9pt;
+        line-height: 1.1;
+    }
+
+    /* Hide elements not needed for patient form */
+    .print-section,
+    .print-button,
+    .print-instructions,
+    .results-section,
+    .practitioner-recommendations {
+        display: none !important;
+    }
+
+    /* Show assessment key on print */
+    .assessment-key {
+        display: block !important;
+        margin-top: 8px;
+        padding: 8px;
+        background-color: #f9f9f9;
+        border: 1.5px solid #2c5f2d;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .assessment-key h3 {
+        color: #2c5f2d;
+        font-size: 11pt;
+        margin-bottom: 8px;
+        text-align: center;
+        border-bottom: 2px solid #2c5f2d;
+        padding-bottom: 4px;
+        line-height: 1.1;
+    }
+
+    .key-section {
+        margin-bottom: 6px;
+        page-break-inside: avoid;
+    }
+
+    .key-section h4 {
+        color: #2c5f2d;
+        font-size: 8.5pt;
+        font-weight: bold;
+        margin-bottom: 2px;
+        line-height: 1.1;
+    }
+
+    .key-subtitle {
+        font-size: 7.5pt;
+        font-style: italic;
+        color: #666;
+        margin: -2px 0 3px 0;
+        line-height: 1.1;
+    }
+
+    .key-section ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0 0 0 10px;
+    }
+
+    .key-section li {
+        font-size: 7.5pt;
+        line-height: 1.2;
+        padding: 1px 0;
+    }
+
+    .key-section li strong {
+        color: #2c5f2d;
+        font-weight: bold;
+    }
+
+    /* Remove all page URLs and dates from print */
+    @page {
+        margin: 0.5in 0.4in;
+        size: letter;
+    }
+
+    /* Header optimization - minimal spacing */
+    .header {
+        margin-bottom: 4px;
+        padding-bottom: 3px;
+        border-bottom: 2px solid #000;
+    }
+
+    .header h1 {
+        font-size: 15pt;
+        margin-bottom: 1px;
+        line-height: 1;
+    }
+
+    .subtitle {
+        font-size: 9pt;
+        margin-bottom: 1px;
+        line-height: 1;
+    }
+
+    .clinic-info {
+        font-size: 7.5pt;
+        margin-bottom: 0;
+    }
+
+    /* Patient info section - SINGLE LINE for print */
+    .patient-info-section {
+        margin-bottom: 4px;
+        padding-bottom: 3px;
+        border-bottom: 1.5px solid #000;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: baseline;
+        gap: 15px;
+    }
+
+    .patient-name-row {
+        display: inline-flex;
+        align-items: baseline;
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+
+    .patient-name-row label {
+        font-size: 9pt;
+        margin-right: 5px;
+        white-space: nowrap;
+    }
+
+    .patient-name-input {
+        border-bottom: 1px solid #000;
+        padding: 0px 2px;
+        font-size: 9pt;
+        width: 180px;
+    }
+
+    /* Hide placeholder text */
+    .patient-name-input::placeholder,
+    input::placeholder {
+        color: transparent !important;
+        opacity: 0 !important;
+    }
+
+    .patient-details-row {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 15px;
+        flex-shrink: 0;
+    }
+
+    .info-group {
+        display: inline-flex;
+        align-items: baseline;
+        margin-bottom: 0;
+    }
+
+    .info-group label {
+        font-size: 9pt;
+        margin-right: 5px;
+        white-space: nowrap;
+    }
+
+    .small-input {
+        border-bottom: 1px solid #000;
+        padding: 0px 2px;
+        font-size: 9pt;
+        width: 50px;
+    }
+
+    .date-input {
+        border-bottom: 1px solid #000;
+        padding: 0px 2px;
+        font-size: 9pt;
+        width: 90px;
+        color: transparent !important;
+    }
+
+    /* Completely hide all date input content */
+    input[type="date"] {
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        appearance: none !important;
+        color: transparent !important;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        display: none !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        visibility: hidden !important;
+    }
+
+    input[type="date"]::-webkit-datetime-edit {
+        display: none !important;
+    }
+
+    input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+        display: none !important;
+    }
+
+    input[type="date"]::-webkit-datetime-edit-text {
+        display: none !important;
+    }
+
+    input[type="date"]::-webkit-datetime-edit-month-field {
+        display: none !important;
+    }
+
+    input[type="date"]::-webkit-datetime-edit-day-field {
+        display: none !important;
+    }
+
+    input[type="date"]::-webkit-datetime-edit-year-field {
+        display: none !important;
+    }
+
+    input[type="date"]::-webkit-inner-spin-button {
+        display: none !important;
+    }
+
+    input[type="date"]::-webkit-clear-button {
+        display: none !important;
+    }
+
+    /* Firefox */
+    input[type="date"]::-moz-calendar-picker-indicator {
+        display: none !important;
+        opacity: 0 !important;
+    }
+
+    /* Additional targeting for date input */
+    .date-input::-webkit-calendar-picker-indicator {
+        display: none !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        visibility: hidden !important;
+    }
+
+    .date-input::-webkit-datetime-edit {
+        display: none !important;
+    }
+
+    .date-input::-webkit-datetime-edit-fields-wrapper {
+        display: none !important;
+    }
+
+    .date-input::-webkit-datetime-edit-text {
+        display: none !important;
+    }
+
+    .date-input::-webkit-datetime-edit-month-field {
+        display: none !important;
+    }
+
+    .date-input::-webkit-datetime-edit-day-field {
+        display: none !important;
+    }
+
+    .date-input::-webkit-datetime-edit-year-field {
+        display: none !important;
+    }
+
+    .date-input::-webkit-inner-spin-button {
+        display: none !important;
+    }
+
+    .date-input::-webkit-clear-button {
+        display: none !important;
+    }
+
+    .date-input::-moz-calendar-picker-indicator {
+        display: none !important;
+        opacity: 0 !important;
+    }
+
+    /* Health concerns section - minimal spacing */
+    .health-concerns-section {
+        margin-bottom: 4px;
+    }
+
+    .concerns-title {
+        font-size: 9pt;
+        margin-bottom: 2px;
+        line-height: 1.1;
+    }
+
+    .concerns-list {
+        gap: 1px;
+    }
+
+    .concern-item {
+        font-size: 9pt;
+        line-height: 1.1;
+    }
+
+    .concern-number {
+        min-width: 12px;
+    }
+
+    .concern-item input {
+        border-bottom: 1px solid #000;
+        padding: 0px 2px;
+        margin-left: 4px;
+        font-size: 9pt;
+    }
+
+    /* Scoring guide - compact */
+    .scoring-guide {
+        background: #f5f5f5;
+        border: 1px solid #666;
+        padding: 3px 6px;
+        margin-bottom: 4px;
+        font-size: 7.5pt;
+        line-height: 1.2;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Element sections - allow natural flow, no forced breaks */
+    .element-section {
+        margin-bottom: 4px;
+        border: 1px solid #666;
+        page-break-inside: auto;
+    }
+
+    /* Remove all forced page breaks - let it flow naturally */
+    #symptom-sections > div {
+        page-break-after: auto;
+        page-break-before: auto;
+    }
+
+    /* Element headers with preserved colors */
+    .element-header {
+        padding: 2px 6px;
+        font-size: 10pt;
+        font-weight: bold;
+        color: white;
+        line-height: 1.1;
+        page-break-after: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .element-header .section-title {
+        font-weight: bold;
+    }
+
+    .element-header .section-subtitle {
+        font-size: 8.5pt;
+        font-style: italic;
+    }
+
+    .wood-header { 
+        background: #4a6b4a !important; 
+    }
+    
+    .fire-header { 
+        background: #a85050 !important; 
+    }
+    
+    .earth-header { 
+        background: #b8944a !important; 
+    }
+    
+    .metal-header { 
+        background: #606060 !important; 
+    }
+    
+    .water-header { 
+        background: #4a5f8a !important; 
+    }
+    
+    .endocrineUnder-header { 
+        background: #5d4777 !important; 
+    }
+    
+    .endocrineOver-header { 
+        background: #a0522d !important; 
+    }
+
+    /* Element description */
+    .element-description {
+        padding: 1px 6px;
+        background: #fafafa;
+        font-size: 7pt;
+        font-style: italic;
+        line-height: 1.1;
+        border-bottom: 1px solid #ddd;
+        page-break-after: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Symptoms table - very compact */
+    .symptoms-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .symptoms-table tr {
+        border-bottom: 1px solid #e0e0e0;
+        page-break-inside: auto;
+    }
+
+    .symptoms-table td {
+        padding: 1px 6px;
+        font-size: 8pt;
+        line-height: 1.1;
+    }
+
+    /* Subsection headers with preserved colors */
+    .subsection-row {
+        page-break-after: auto;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .subsection-header-cell {
+        padding: 1.5px 6px !important;
+        font-weight: bold;
+        font-size: 8.5pt;
+        color: #000;
+        line-height: 1.1;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Subsection colors for each element */
+    .wood-header ~ table .subsection-row,
+    .wood-header ~ table .subsection-header-cell {
+        background-color: #e8f4e8 !important;
+    }
+
+    .fire-header ~ table .subsection-row,
+    .fire-header ~ table .subsection-header-cell {
+        background-color: #f5e6e6 !important;
+    }
+
+    .earth-header ~ table .subsection-row,
+    .earth-header ~ table .subsection-header-cell {
+        background-color: #f5f0e6 !important;
+    }
+
+    .metal-header ~ table .subsection-row,
+    .metal-header ~ table .subsection-header-cell {
+        background-color: #e6e6e6 !important;
+    }
+
+    .water-header ~ table .subsection-row,
+    .water-header ~ table .subsection-header-cell {
+        background-color: #e6ecf5 !important;
+    }
+
+    .endocrineUnder-header ~ table .subsection-row,
+    .endocrineUnder-header ~ table .subsection-header-cell {
+        background-color: #ebe6f0 !important;
+    }
+
+    .endocrineOver-header ~ table .subsection-row,
+    .endocrineOver-header ~ table .subsection-header-cell {
+        background-color: #f5ebe6 !important;
+    }
+
+    /* Total row */
+    .total-row {
+        padding: 2px 6px;
+        background-color: #f0f0f0;
+        font-weight: bold;
+        border-top: 2px solid #000;
+        font-size: 8.5pt;
+        line-height: 1.1;
+        page-break-after: auto;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .total-row input {
+        font-size: 8.5pt;
+    }
+
+    /* Button groups - show as plain numbers without circles */
+    .button-group {
+        display: inline-flex;
+        gap: 7px;
+        align-items: center;
+    }
+
+    .button-group button {
+        padding: 0;
+        border: none;
+        background-color: transparent !important;
+        color: #000 !important;
+        font-size: 8pt;
+        line-height: 1;
+        display: inline;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-weight: normal !important;
+    }
+
+    /* Remove highlighting/active states for print */
+    .button-group button.active {
+        background-color: transparent !important;
+        color: #000 !important;
+        border: none !important;
+        font-weight: normal !important;
+    }
+
+    /* Print input values, not input boxes */
+    input[type="text"],
+    input[type="date"],
+    textarea {
+        border: none !important;
+        border-bottom: 1px solid #000 !important;
+        background: transparent !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
